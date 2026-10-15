@@ -12,6 +12,7 @@
 <link rel="preload" as="image" href="assets/hero.jpg">
 <style>
 @font-face{font-family:"Moderat Extended";src:url("assets/fonts/ModeratExtended-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"Gilroy";src:url("assets/fonts/GILROY-EXTRABOLD.OTF") format("opentype");font-weight:800;font-display:swap}
 @font-face{font-family:"Moderat Extended";src:url("assets/fonts/ModeratExtended-SemiBold.otf") format("opentype");font-weight:600;font-display:swap}
 :root{
   --ink:#1B2350; --ink-2:#4A5178; --muted:#7C82A3;
@@ -29,6 +30,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font
 img{max-width:100%;display:block}
 h1,h2,h3{font-family:var(--font);font-weight:600;text-wrap:balance;margin:0;letter-spacing:-.02em}
 h1 em,h2 em,h3 em{font-style:normal}
+.gilroy{font-family:"Gilroy",var(--font);font-weight:800;letter-spacing:-.01em}
 button,input,select,textarea,dialog{font-family:var(--font)}
 /* Logotipo Flor en línea con el texto (hereda el color del texto) */
 .flor{display:inline-block;height:1.3em;width:auto;aspect-ratio:2519/1683;vertical-align:-.36em;margin-inline:.1em;fill:var(--logo);overflow:visible}
@@ -43,12 +45,12 @@ h1 .flor,h2 .flor,h3 .flor,.st .flor{height:1.08em;vertical-align:-.29em}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:18%;background:linear-gradient(180deg,rgba(240,245,251,0),var(--bg));pointer-events:none}
 
 /* Steps */
-.steps{max-width:1100px;margin:0 auto;padding:10px 20px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative;z-index:1}
-.st{display:flex;align-items:flex-start;gap:14px;justify-content:center}
-.st .n{font-weight:400;font-size:62px;line-height:.9;color:var(--ink)}
+.steps{max-width:1140px;margin:0 auto;padding:10px 20px 0;display:grid;grid-template-columns:repeat(3,auto);justify-content:space-between;gap:24px;position:relative;z-index:1}
+.st{display:flex;align-items:center;gap:12px;justify-content:center}
+.st .n{font-weight:400;font-size:50px;line-height:.9;color:var(--ink)}
 .st .t{border-left:2px solid var(--gold);padding-left:12px;text-transform:uppercase;color:var(--ink)}
-.st .t b{display:block;white-space:nowrap;font-weight:600;font-size:18px;letter-spacing:.06em;line-height:1.15}
-.st .t > span{display:block;font-size:12px;letter-spacing:.1em;line-height:1.35;margin-top:6px}
+.st .t b{display:block;white-space:nowrap;font-weight:600;font-size:17px;letter-spacing:.06em;line-height:1.15}
+.st .t > span{display:block;white-space:nowrap;font-size:11px;letter-spacing:.06em;line-height:1.35;margin-top:6px}
 
 /* Test container */
 .test{max-width:1040px;margin:0 auto;padding:72px 20px 80px;scroll-margin-top:0}
@@ -68,8 +70,6 @@ h1 .flor,h2 .flor,h3 .flor,.st .flor{height:1.08em;vertical-align:-.29em}
 .start p.lead{font-size:clamp(17px,1.9vw,20px);color:var(--ink-2);max-width:46ch;margin:26px 0 30px;line-height:1.6}
 .meta{display:flex;gap:24px;flex-wrap:wrap;margin-top:24px;font-size:14px;color:var(--muted)}
 .meta b{color:var(--ink);font-weight:600}
-.prize{margin-top:30px;display:flex;gap:14px;align-items:center;font-size:15px;color:var(--ink-2);border-top:1px solid var(--line);padding-top:24px}
-.prize svg{flex:none}
 
 /* Progress */
 .progress{display:flex;align-items:center;gap:0;margin:0 auto 34px;max-width:560px}
@@ -154,18 +154,22 @@ input::placeholder{font-family:var(--font)}
 .ticket p{color:var(--ink-2);margin:0 0 26px;max-width:48ch}
 .ticket p b{color:var(--ink)}
 .hl{background:var(--accent);color:#fff;font-weight:600;padding:2px 6px;border-radius:2px;white-space:nowrap}
-.btn-cta{display:inline-flex;align-items:center;gap:12px;background:var(--accent);color:#fff;font-size:14px;padding:20px 34px;border-radius:3px;box-shadow:0 18px 34px -16px rgba(47,85,201,.75)}
+.sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;padding:0 16px calc(20px + env(safe-area-inset-bottom));pointer-events:none;transition:opacity .25s,transform .25s}
+.sticky-cta .btn{pointer-events:auto}
+body.no-cta .sticky-cta{opacity:0;transform:translateY(16px);visibility:hidden}
+.btn-cta{display:inline-flex;align-items:center;gap:12px;background:var(--accent);color:#fff;font-size:14px;padding:20px 34px;border-radius:3px;box-shadow:0 18px 34px -12px rgba(27,35,80,.55),0 0 0 1px rgba(255,255,255,.12)}
 .btn-cta:hover{background:var(--ink);transform:translateY(-2px)}
 .btn-cta svg{flex:none}
-.disclaimer{display:block;margin-top:18px;font-size:12.5px;color:var(--muted);max-width:52ch}
+.disclaimer{display:block;margin-top:0;font-size:12.5px;color:var(--muted);max-width:52ch}
 .legal-link{color:var(--accent);font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
 .legal-link:hover{color:var(--ink)}
+.ticket-in > *{min-width:0}
 .minis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 10px;align-items:end;justify-items:center}
 .minis img{height:clamp(110px,13vw,150px);width:auto;filter:drop-shadow(0 10px 12px rgba(27,35,80,.18));transition:transform .25s}
 .minis img:hover{transform:translateY(-4px)}
 
 /* Footer */
-footer{background:var(--footer);color:rgba(255,255,255,.72);padding:56px 20px 40px}
+footer{background:var(--footer);color:rgba(255,255,255,.72);padding:56px 20px calc(120px + env(safe-area-inset-bottom))} /* hueco para el CTA fijo */
 .f-in{max-width:1040px;margin:0 auto;display:grid;gap:28px;justify-items:center;text-align:center}
 .f-logo{height:56px;width:auto}
 .f-links{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 28px;border-top:1px solid rgba(255,255,255,.14);padding-top:24px;width:100%}
@@ -195,12 +199,17 @@ dialog.wide{max-width:min(860px,calc(100vw - 32px))}
 .ptable td:first-child{width:52px}
 .m-in h3{font-size:24px;line-height:1.15;margin:6px 0 16px}
 .m-in p{color:var(--ink-2);font-size:14.5px;margin:0 0 12px}
-.m-close{position:absolute;z-index:2;top:10px;right:10px;width:36px;height:36px;border-radius:50%;border:0;background:var(--bg);color:var(--ink);font-size:20px;cursor:pointer;line-height:1}
+.m-close{position:absolute;z-index:2;top:10px;right:10px;width:36px;height:36px;border-radius:50%;border:0;padding:0;display:grid;place-items:center;background:var(--bg);color:var(--ink);cursor:pointer;transition:background .2s}
+.m-close:hover{background:var(--accent-soft)}
+.m-close svg{display:block}
 
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.screen,.bottle-stage img{animation:none}.tile,.bar i{transition:none}}
 
+@media (max-width:1000px){
+  .steps{grid-template-columns:auto;justify-content:center;gap:16px;padding-top:4px}
+  .st{justify-content:flex-start}
+}
 @media (max-width:820px){
-  .steps{grid-template-columns:1fr;gap:16px;max-width:300px;padding-top:4px}
   .st{justify-content:flex-start}
   .st .n{font-size:48px;width:36px}
   .st .t b{font-size:16px}
@@ -217,12 +226,19 @@ dialog.wide{max-width:min(860px,calc(100vw - 32px))}
   .pyramid div{grid-template-columns:90px 1fr}
   .ticket{padding:0 16px 56px}
   .ticket-in{grid-template-columns:1fr;gap:30px}
-  .minis{order:-1;grid-template-columns:repeat(8,1fr);gap:4px}
-  .minis img{height:auto;width:100%}
-  .btn-cta{width:100%;justify-content:center;padding:18px 16px;white-space:nowrap;letter-spacing:.1em}
+  .minis{order:-1;display:flex;justify-content:center;align-items:flex-end;gap:clamp(4px,1.2vw,10px)}
+  .minis img{height:min(150px,calc((100vw - 96px)/3.4));width:auto;min-width:0;flex:none} /* misma altura para las 8 botellas */
+  .btn-cta{width:100%;max-width:420px;justify-content:center;padding:18px 16px;white-space:nowrap;letter-spacing:.1em}
+  .sticky-cta{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   .toc ol{columns:1}
   .m-in{padding:26px 20px 22px}
   .finish{display:none}
+}
+@media (max-width:480px){
+  .st .n{font-size:clamp(32px,10.5vw,40px);width:clamp(22px,7.5vw,28px)}
+  .st .t{padding-left:10px}
+  .st .t b{font-size:clamp(13px,4vw,15px)}
+  .st .t > span{font-size:clamp(7.5px,2.5vw,9.5px);letter-spacing:.04em}
 }
 </style>
 </head>
@@ -235,9 +251,9 @@ dialog.wide{max-width:min(860px,calc(100vw - 32px))}
 </header>
 
 <section class="steps" aria-label="Cómo participar">
-  <div class="st"><span class="n">1</span><span class="t"><b>Haz el test</b><span>Y descubre<br>tu fragancia</span></span></div>
-  <div class="st"><span class="n">2</span><span class="t"><b>Compra tu <svg class="flor" viewBox="158 157 2519 1683" role="img" aria-label="Flor"><use href="#flor-logo"/></svg></b><span>Elige tu fragancia<br>recomendada</span></span></div>
-  <div class="st"><span class="n">3</span><span class="t"><b>Sube tu ticket</b><span>Participa y gana<br>experiencias<br>de bienestar</span></span></div>
+  <div class="st"><span class="n">1</span><span class="t"><b>Haz el test</b><span>Y descubre tu fragancia</span></span></div>
+  <div class="st"><span class="n">2</span><span class="t"><b>Compra tu <svg class="flor" viewBox="158 157 2519 1683" role="img" aria-label="Flor"><use href="#flor-logo"/></svg></b><span>Elige tu fragancia recomendada</span></span></div>
+  <div class="st"><span class="n">3</span><span class="t"><b>Sube tu ticket</b><span>Participa y gana experiencias de bienestar</span></span></div>
 </section>
 
 <main class="test" id="test">
@@ -250,10 +266,6 @@ dialog.wide{max-width:min(860px,calc(100vw - 32px))}
       <span class="eyebrow">Sorteo Smartbox SPA</span>
       <h2 id="ticket-t">¿Ya tienes tu <svg class="flor" viewBox="158 157 2519 1683" role="img" aria-label="Flor"><use href="#flor-logo"/></svg>? Participa en el sorteo<sup>*</sup></h2>
       <p>Compra el producto <svg class="flor" viewBox="158 157 2519 1683" role="img" aria-label="Flor"><use href="#flor-logo"/></svg> que prefieras, siempre que sea un producto <a class="legal-link" href="#bases-productos" data-anchor="bases-productos">incluido en las bases legales de esta promoción</a>, y sube tu ticket para entrar en el sorteo de una Smartbox SPA <mark class="hl">valorada en 79,90€</mark>.</p>
-      <button class="btn btn-cta" type="button" id="toTicket">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
-        Sube aquí tu ticket
-      </button>
       <small class="disclaimer">*Puedes participar en el sorteo sin necesidad de hacer previamente el test.</small>
     </div>
     <div class="minis" aria-hidden="true" id="minis"></div>
@@ -272,7 +284,15 @@ dialog.wide{max-width:min(860px,calc(100vw - 32px))}
   </div>
 </footer>
 
-<dialog id="modal"><button class="m-close" type="button" aria-label="Cerrar">×</button><div class="m-in" id="modalBody"></div></dialog>
+<!-- CTA fijo: siempre visible al hacer scroll -->
+<div class="sticky-cta" id="stickyCta">
+  <button class="btn btn-cta" type="button" id="toTicket">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+    Sube aquí tu ticket
+  </button>
+</div>
+
+<dialog id="modal"><button class="m-close" type="button" aria-label="Cerrar"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><div class="m-in" id="modalBody"></div></dialog>
 
 <script>
 const LOGO = '<svg class="flor" viewBox="158 157 2519 1683" role="img" aria-label="Flor"><use href="#flor-logo"/></svg>';
@@ -372,6 +392,7 @@ function render(){
     if(Math.abs(window.scrollY-top)>4) window.scrollTo({top,behavior:"smooth"});
   }
   first = false;
+  document.body.classList.toggle("no-cta", idx>Q.length); // en el formulario el CTA sobra
   if(idx===-1) return renderStart();
   if(idx<Q.length) return renderQ();
   if(idx===Q.length) return renderResult();
@@ -382,13 +403,10 @@ function render(){
 function renderStart(){
   app.innerHTML = `<section class="screen card narrow start">
     <span class="eyebrow">Nueva gama ${LOGO}</span>
-    <h2 style="font-size:clamp(36px,5.6vw,64px);line-height:1.02;margin-top:18px">Descubre tu<br><em style="color:var(--accent)">fragancia</em> ${LOGO}</h2>
+    <h2 style="font-size:clamp(36px,5.6vw,64px);line-height:1.02;margin-top:18px">Descubre tu<br><em class="gilroy" style="color:var(--accent)">fragancia</em> ${LOGO}</h2>
     <p class="lead">Cada aroma cuenta una historia. Responde 5 preguntas sobre lo que te hace sentir bien y descubre la fragancia que tu ropa estaba esperando.</p>
     <button class="btn btn-primary" id="go">Empezar el test</button>
     <div class="meta"><span><b>2 min</b> de duración</span><span><b>5</b> preguntas</span><span><b>8</b> fragancias</span></div>
-    <div class="prize">${GIFT("#1B2350")}
-      <span>Compra un suavizante ${LOGO} y participa en el sorteo de una <br>Smartbox SPA <b>valorada en 79,90€.</b></span>
-    </div>
   </section>`;
   document.getElementById("go").onclick=()=>{idx=0;render();};
 }
