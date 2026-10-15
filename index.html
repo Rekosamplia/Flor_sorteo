@@ -6,9 +6,9 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Descubre tu fragancia Flor</title>
 <meta name="description" content="Haz el test, descubre tu suavizante Flor y participa en el sorteo de una Smartbox SPA.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap">
+<link rel="icon" type="image/svg+xml" href="assets/logo/favicon.svg">
+<link rel="preload" as="font" type="font/ttf" href="assets/fonts/ModeratExtended-Regular.ttf" crossorigin>
+<link rel="preload" as="font" type="font/otf" href="assets/fonts/ModeratExtended-SemiBold.otf" crossorigin>
 <link rel="preload" as="image" href="assets/hero.jpg">
 <style>
 @font-face{font-family:"Moderat Extended";src:url("assets/fonts/ModeratExtended-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
@@ -18,17 +18,22 @@
   --bg:#F0F5FB; --paper:#FFFFFF; --card:#F5F6FC; --line:#DDE0EE;
   --accent:#2F55C9; --accent-soft:#E4EAFB; --gold:#C9A45C;
   --footer:#232850;
-  --serif:"Instrument Serif", "Cormorant Garamond", Georgia, serif;
-  --sans:"DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ext:"Moderat Extended", "DM Sans", system-ui, sans-serif;
+  --logo:#2B335E;
+  --font:"Moderat Extended", system-ui, -apple-system, "Segoe UI", sans-serif;
   --fr:#2F55C9;
   color-scheme: light;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;background:var(--footer)}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
-h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;letter-spacing:-.005em}
+h1,h2,h3{font-family:var(--font);font-weight:600;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h1 em,h2 em,h3 em{font-style:normal}
+button,input,select,textarea,dialog{font-family:var(--font)}
+/* Logotipo Flor en línea con el texto (hereda el color del texto) */
+.flor{display:inline-block;height:1.3em;width:auto;aspect-ratio:2519/1683;vertical-align:-.36em;margin-inline:.1em;fill:var(--logo);overflow:visible}
+h1 .flor,h2 .flor,h3 .flor,.st .flor{height:1.08em;vertical-align:-.29em}
+.sorteo .flor,footer .flor{fill:currentColor} /* sobre fondo oscuro, en blanco */
 .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:500}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
@@ -40,10 +45,10 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;let
 /* Steps */
 .steps{max-width:1100px;margin:0 auto;padding:10px 20px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative;z-index:1}
 .st{display:flex;align-items:flex-start;gap:14px;justify-content:center}
-.st .n{font-family:var(--ext);font-weight:400;font-size:62px;line-height:.9;color:var(--ink)}
-.st .t{border-left:2px solid var(--gold);padding-left:12px;font-family:var(--ext);text-transform:uppercase;color:var(--ink)}
-.st .t b{display:block;font-weight:600;font-size:18px;letter-spacing:.06em;line-height:1.15}
-.st .t span{display:block;font-size:12px;letter-spacing:.1em;line-height:1.35;margin-top:6px}
+.st .n{font-weight:400;font-size:62px;line-height:.9;color:var(--ink)}
+.st .t{border-left:2px solid var(--gold);padding-left:12px;text-transform:uppercase;color:var(--ink)}
+.st .t b{display:block;white-space:nowrap;font-weight:600;font-size:18px;letter-spacing:.06em;line-height:1.15}
+.st .t > span{display:block;font-size:12px;letter-spacing:.1em;line-height:1.35;margin-top:6px}
 
 /* Test container */
 .test{max-width:1040px;margin:0 auto;padding:72px 20px 80px;scroll-margin-top:0}
@@ -51,7 +56,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;let
 .card.narrow{max-width:700px;margin:0 auto}
 
 /* Buttons */
-.btn{appearance:none;border:0;font:inherit;font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;padding:15px 26px;border-radius:2px;cursor:pointer;transition:background .2s,color .2s,opacity .2s,transform .15s}
+.btn{appearance:none;border:0;font:inherit;font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:15px 26px;border-radius:2px;cursor:pointer;transition:background .2s,color .2s,opacity .2s,transform .15s}
 .btn-primary{background:var(--ink);color:#fff}
 .btn-primary:hover:not(:disabled){background:var(--accent)}
 .btn-primary:disabled{opacity:.28;cursor:not-allowed}
@@ -60,8 +65,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;let
 .btn:focus-visible,.tile:focus-visible,input:focus-visible,.fbtn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
 /* Start */
-.start h1{font-size:clamp(46px,7.4vw,88px);line-height:.95;margin-top:18px}
-.start h1 em{color:var(--accent)}
 .start p.lead{font-size:clamp(17px,1.9vw,20px);color:var(--ink-2);max-width:46ch;margin:26px 0 30px;line-height:1.6}
 .meta{display:flex;gap:24px;flex-wrap:wrap;margin-top:24px;font-size:14px;color:var(--muted)}
 .meta b{color:var(--ink);font-weight:600}
@@ -83,16 +86,16 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;let
 /* Question */
 .q-head{text-align:center;margin-bottom:30px}
 .q-head .eyebrow{margin-bottom:10px;display:block}
-.q-head h2{font-size:clamp(30px,4.4vw,46px);line-height:1.08;max-width:22ch;margin-inline:auto}
+.q-head h2{font-size:clamp(24px,3.2vw,34px);line-height:1.15;max-width:24ch;margin-inline:auto}
 .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:900px;margin:0 auto}
 .tile{appearance:none;font:inherit;color:inherit;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:14px;transition:border-color .2s,transform .2s,box-shadow .2s}
 .tile:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(27,35,80,.35)}
 .tile .art{aspect-ratio:4/3;border-radius:2px;position:relative;overflow:hidden}
-.tile .art .glyph{position:absolute;right:12px;bottom:10px;font-family:var(--serif);font-style:italic;font-size:44px;line-height:1;color:rgba(255,255,255,.9);text-shadow:0 1px 12px rgba(0,0,0,.08)}
+.tile .art .glyph{position:absolute;right:12px;bottom:10px;font-weight:600;font-size:22px;letter-spacing:-.01em;line-height:1;color:rgba(255,255,255,.92);text-shadow:0 1px 12px rgba(0,0,0,.08)}
 .tile .txt{padding:0 6px 8px;display:flex;gap:12px;align-items:flex-start}
 .tile .radio{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);flex:none;margin-top:2px;position:relative;transition:border-color .2s}
-.tile .label{font-size:15.5px;line-height:1.4}
-.tile .label b{display:block;font-weight:600;font-size:16px;margin-bottom:2px}
+.tile .label{font-size:14px;line-height:1.45;color:var(--ink-2)}
+.tile .label b{display:block;font-weight:600;font-size:15px;margin-bottom:3px;color:var(--ink)}
 .tile[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
 .tile[aria-pressed="true"] .radio{border-color:var(--ink)}
 .tile[aria-pressed="true"] .radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--ink)}
@@ -106,7 +109,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;let
 .bottle-stage img{position:absolute;z-index:1;inset:7% 0;margin:auto;height:84%;width:auto;max-width:none;filter:drop-shadow(0 22px 26px rgba(27,35,80,.2));animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
 @keyframes rise{from{opacity:.001;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
 .result .eyebrow{display:block;margin-bottom:8px}
-.result h2{font-size:clamp(40px,5.6vw,64px);line-height:.98}
+.result h2{font-size:clamp(30px,4vw,46px);line-height:1.05}
 .result h2 em{color:var(--fr)}
 .family{display:inline-block;margin-top:14px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--fr);background:color-mix(in srgb,var(--fr) 12%,#fff);padding:6px 10px;border-radius:99px}
 .result p.desc{font-size:17px;color:var(--ink-2);max-width:52ch;margin:20px 0 26px}
@@ -118,35 +121,53 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;let
 .combo img{width:auto;height:58px;flex:none}
 .combo b{font-weight:600}
 .sorteo{margin-top:28px;padding:24px;background:var(--ink);color:#fff;border-radius:4px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
-.sorteo h3{font-size:28px;line-height:1.1}
+.sorteo h3{font-size:22px;line-height:1.15}
 .sorteo p{margin:6px 0 16px;color:rgba(255,255,255,.75);font-size:14.5px}
 .sorteo .btn{background:#fff;color:var(--ink)}
 .sorteo .btn:hover{background:var(--accent-soft)}
 .after{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px}
 
 /* Form */
-.form-wrap h2{font-size:clamp(34px,5vw,52px);line-height:1.02;text-align:center}
+.form-wrap h2{font-size:clamp(26px,3.8vw,38px);line-height:1.1;text-align:center}
 .form-wrap .sub{text-align:center;color:var(--ink-2);margin:12px auto 28px;max-width:46ch}
 form{display:grid;gap:16px;background:var(--paper);border:1px solid var(--line);padding:26px;border-radius:4px}
 label.f{display:grid;gap:6px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--ink-2)}
 input[type=text],input[type=email],input[type=file]{font:inherit;font-size:15px;letter-spacing:0;text-transform:none;font-weight:400;color:var(--ink);border:1px solid var(--line);border-radius:2px;padding:12px 14px;background:var(--bg);width:100%}
+input[type=file]::file-selector-button{font-family:var(--font);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--ink);border:0;border-radius:2px;padding:8px 12px;margin-right:12px;cursor:pointer}
+input::placeholder{font-family:var(--font)}
 .check{display:flex;gap:10px;font-size:13.5px;color:var(--ink-2);align-items:flex-start}
 .check input{margin-top:3px;accent-color:var(--ink)}
 .err{color:#B3261E;font-size:13px;min-height:1em}
 .note{font-size:12px;color:var(--muted);text-align:center;margin-top:14px}
 .done{text-align:center}
-.done h2{font-size:clamp(36px,5vw,56px)}
+.done h2{font-size:clamp(28px,4vw,42px)}
 .done p{color:var(--ink-2)}
 
 .screen{animation:in .45s ease both}
 @keyframes in{from{opacity:.001;transform:translateY(10px)}to{opacity:1;transform:none}}
 
+/* Bloque ticket */
+.ticket{max-width:1040px;margin:0 auto;padding:0 20px 88px}
+.ticket-in{position:relative;overflow:hidden;border-radius:4px;background:linear-gradient(120deg,#FFFFFF 0%,#EEF3FD 55%,#DCE6FB 100%);border:1px solid var(--line);padding:clamp(28px,5vw,52px);display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+.ticket h2{font-size:clamp(26px,3.6vw,38px);line-height:1.1;margin:12px 0 16px}
+.ticket h2 sup{color:var(--accent);font-size:.6em;top:-.6em}
+.ticket p{color:var(--ink-2);margin:0 0 26px;max-width:48ch}
+.ticket p b{color:var(--ink)}
+.hl{background:var(--accent);color:#fff;font-weight:600;padding:2px 6px;border-radius:2px;white-space:nowrap}
+.btn-cta{display:inline-flex;align-items:center;gap:12px;background:var(--accent);color:#fff;font-size:14px;padding:20px 34px;border-radius:3px;box-shadow:0 18px 34px -16px rgba(47,85,201,.75)}
+.btn-cta:hover{background:var(--ink);transform:translateY(-2px)}
+.btn-cta svg{flex:none}
+.disclaimer{display:block;margin-top:18px;font-size:12.5px;color:var(--muted);max-width:52ch}
+.legal-link{color:var(--accent);font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.legal-link:hover{color:var(--ink)}
+.minis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 10px;align-items:end;justify-items:center}
+.minis img{height:clamp(110px,13vw,150px);width:auto;filter:drop-shadow(0 10px 12px rgba(27,35,80,.18));transition:transform .25s}
+.minis img:hover{transform:translateY(-4px)}
+
 /* Footer */
 footer{background:var(--footer);color:rgba(255,255,255,.72);padding:56px 20px 40px}
 .f-in{max-width:1040px;margin:0 auto;display:grid;gap:28px;justify-items:center;text-align:center}
-.f-logo{font-family:var(--serif);font-size:44px;line-height:1;color:#fff}
-.f-review{appearance:none;font:inherit;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:12px 22px;cursor:pointer;transition:background .2s,border-color .2s}
-.f-review:hover{background:rgba(255,255,255,.08);border-color:#fff}
+.f-logo{height:56px;width:auto}
 .f-links{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 28px;border-top:1px solid rgba(255,255,255,.14);padding-top:24px;width:100%}
 .fbtn{appearance:none;background:none;border:0;font:inherit;font-size:13px;letter-spacing:.06em;color:rgba(255,255,255,.8);cursor:pointer;padding:4px 0;text-decoration:underline;text-decoration-color:rgba(255,255,255,.25);text-underline-offset:4px}
 .fbtn:hover{color:#fff;text-decoration-color:#fff}
@@ -155,15 +176,26 @@ footer{background:var(--footer);color:rgba(255,255,255,.72);padding:56px 20px 40
 /* Modal */
 dialog{border:0;border-radius:6px;padding:0;max-width:min(640px,calc(100vw - 32px));width:100%;color:var(--ink);background:var(--paper);box-shadow:0 40px 80px -30px rgba(10,14,40,.5)}
 dialog::backdrop{background:rgba(20,24,56,.55);backdrop-filter:blur(3px)}
-.m-in{padding:30px 30px 26px;max-height:80vh;overflow:auto}
-.m-in h3{font-size:32px;line-height:1.05;margin:6px 0 16px}
+dialog.wide{max-width:min(860px,calc(100vw - 32px))}
+.m-in{position:relative;padding:30px 30px 26px;max-height:80vh;overflow:auto}
+.m-in h4{font-size:15px;font-weight:600;margin:0 0 10px;color:var(--ink)}
+.m-in ul,.m-in ol{color:var(--ink-2);font-size:14px;margin:0 0 12px;padding-left:20px}
+.m-in li{margin-bottom:4px}
+.toc{background:var(--bg);border-radius:4px;padding:16px 18px;margin:0 0 22px}
+.toc ol{margin:8px 0 0;columns:2;column-gap:28px}
+.toc a{color:var(--ink);text-decoration:none}
+.toc a:hover{color:var(--accent);text-decoration:underline}
+.bl{padding:16px 0;border-top:1px solid var(--line);scroll-margin-top:12px;transition:background .4s}
+.bl.flash{background:var(--accent-soft);box-shadow:0 0 0 12px var(--accent-soft);border-radius:2px}
+.ex{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#8A5A00;background:#FFF1D6;border-radius:99px;padding:4px 10px;margin-bottom:6px}
+.ptable{width:100%;border-collapse:collapse;font-size:13.5px;color:var(--ink-2);margin:6px 0 14px}
+.ptable th{text-align:left;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 8px;border-bottom:1px solid var(--line)}
+.ptable td{padding:8px;border-bottom:1px solid var(--line);vertical-align:middle}
+.ptable td img{height:44px;width:auto}
+.ptable td:first-child{width:52px}
+.m-in h3{font-size:24px;line-height:1.15;margin:6px 0 16px}
 .m-in p{color:var(--ink-2);font-size:14.5px;margin:0 0 12px}
-.m-close{position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;border:0;background:var(--bg);color:var(--ink);font-size:20px;cursor:pointer;line-height:1}
-.scores{display:grid;gap:8px;margin-top:16px}
-.scores .row{display:grid;grid-template-columns:170px 1fr 40px;gap:12px;align-items:center;font-variant-numeric:tabular-nums;font-size:13.5px;color:var(--ink-2)}
-.scores .track{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
-.scores .track i{display:block;height:100%;border-radius:99px}
-.scores .row.win{font-weight:600;color:var(--ink)}
+.m-close{position:absolute;z-index:2;top:10px;right:10px;width:36px;height:36px;border-radius:50%;border:0;background:var(--bg);color:var(--ink);font-size:20px;cursor:pointer;line-height:1}
 
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.screen,.bottle-stage img{animation:none}.tile,.bar i{transition:none}}
 
@@ -183,12 +215,19 @@ dialog::backdrop{background:rgba(20,24,56,.55);backdrop-filter:blur(3px)}
   .bottle-stage{aspect-ratio:1;position:relative;top:0}
   .sorteo{grid-template-columns:1fr}
   .pyramid div{grid-template-columns:90px 1fr}
-  .scores .row{grid-template-columns:110px 1fr 36px}
+  .ticket{padding:0 16px 56px}
+  .ticket-in{grid-template-columns:1fr;gap:30px}
+  .minis{order:-1;grid-template-columns:repeat(8,1fr);gap:4px}
+  .minis img{height:auto;width:100%}
+  .btn-cta{width:100%;justify-content:center;padding:18px 16px;white-space:nowrap;letter-spacing:.1em}
+  .toc ol{columns:1}
+  .m-in{padding:26px 20px 22px}
   .finish{display:none}
 }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="flor-logo" viewBox="158 157 2519 1683"><g fill-rule="evenodd"><path d="M527.7,689.6c0-156.5,34.4-297.7,177.3-313.3,18.7-2.1,34.4-8.6,43.1-20.9,7.6-10.7-.6-25.6-13.7-26.1-291.1-10.6-448.8,144-448.8,348v30.8h-32.8c-52.2,0-94.4,42.3-94.4,94.4v9.8h127.2v656.8c0,149.8-18.8,248.4-46.7,339.5-5.5,18,11.3,35,29.3,29.6,222-66.3,259.5-351.9,259.5-496.4v-529.5h113.6c53.6,0,97.8-40.5,103.6-92.5.7-6.2-4.1-11.7-10.3-11.7h-206.9v-18.5Z"/><path d="M1584.5,521.7c-279.2,0-418.9,193.3-418.9,447.7s110.4,431,405.8,431,421.7-152.1,421.7-457.9-193.8-420.8-408.6-420.8ZM1593.8,1318.1c-100.7,0-171.6-160.6-171.6-374.7s48.5-337.3,139.6-337.3,175.8,176.7,175.8,380.6-43.1,331.4-143.8,331.4Z"/><path d="M2501.3,543c-84,0-163.3,65.7-202.3,188.6-1.6,5-8.7,4.8-10-.3-12.4-50.2-43.5-174.1-126.7-174.1h-188.8c-8.4,0-12.2,10.5-5.7,15.8,98.7,82.1,114.8,321.2,114.8,398.6,0,230.4,6.3,313.2-25.8,382.3-5.4,11.7,4.3,24.8,17.1,23.5,69.1-7,137.7-9.6,191.4-58.9,58.9-54.1,51.1-152.6,51.1-313.6s40.3-298.5,104.1-298.5,68.5,98.5,34.5,155.6c11.5,14.5,38.6,23.5,76.4,23.5,89.1,0,145.1-92.2,145.1-167.8s-69.9-174.7-175.2-174.7Z"/><path d="M1132.8,1322.4c-54.1-38.9-78.7-102.6-78.7-199.2V183.7c0-12.9-9.8-23.6-22.6-24.8-129.8-11.5-219.8,65.3-219.8,226.1v755.6c0,158.6,76.5,241.7,189.7,245.5,51.4,1.7,83.1-7.6,133.5-44.1,7.8-5.6,5.7-14-2.1-19.6Z"/></g></symbol></svg>
 
 <header class="hero">
   <h1 class="sr">Descubre tu fragancia Flor</h1>
@@ -197,7 +236,7 @@ dialog::backdrop{background:rgba(20,24,56,.55);backdrop-filter:blur(3px)}
 
 <section class="steps" aria-label="Cómo participar">
   <div class="st"><span class="n">1</span><span class="t"><b>Haz el test</b><span>Y descubre<br>tu fragancia</span></span></div>
-  <div class="st"><span class="n">2</span><span class="t"><b>Compra tu Flor</b><span>Elige tu fragancia<br>recomendada</span></span></div>
+  <div class="st"><span class="n">2</span><span class="t"><b>Compra tu <svg class="flor" viewBox="158 157 2519 1683" role="img" aria-label="Flor"><use href="#flor-logo"/></svg></b><span>Elige tu fragancia<br>recomendada</span></span></div>
   <div class="st"><span class="n">3</span><span class="t"><b>Sube tu ticket</b><span>Participa y gana<br>experiencias<br>de bienestar</span></span></div>
 </section>
 
@@ -205,22 +244,38 @@ dialog::backdrop{background:rgba(20,24,56,.55);backdrop-filter:blur(3px)}
   <div id="app"></div>
 </main>
 
+<section class="ticket" id="ticket" aria-labelledby="ticket-t">
+  <div class="ticket-in">
+    <div>
+      <span class="eyebrow">Sorteo Smartbox SPA</span>
+      <h2 id="ticket-t">¿Ya tienes tu <svg class="flor" viewBox="158 157 2519 1683" role="img" aria-label="Flor"><use href="#flor-logo"/></svg>? Participa en el sorteo<sup>*</sup></h2>
+      <p>Compra el producto <svg class="flor" viewBox="158 157 2519 1683" role="img" aria-label="Flor"><use href="#flor-logo"/></svg> que prefieras, siempre que sea un producto <a class="legal-link" href="#bases-productos" data-anchor="bases-productos">incluido en las bases legales de esta promoción</a>, y sube tu ticket para entrar en el sorteo de una Smartbox SPA <mark class="hl">valorada en 79,90€</mark>.</p>
+      <button class="btn btn-cta" type="button" id="toTicket">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+        Sube aquí tu ticket
+      </button>
+      <small class="disclaimer">*Puedes participar en el sorteo sin necesidad de hacer previamente el test.</small>
+    </div>
+    <div class="minis" aria-hidden="true" id="minis"></div>
+  </div>
+</section>
+
 <footer>
   <div class="f-in">
-    <div class="f-logo">Flor</div>
-    <button class="f-review" id="openReview" type="button">Revisión interna · Ver puntuación</button>
+    <img class="f-logo" src="assets/logo/flor-logo-blanco.svg" width="84" height="56" alt="Flor">
     <nav class="f-links" aria-label="Información legal">
       <button class="fbtn" type="button" data-legal="legal">Textos legales</button>
       <button class="fbtn" type="button" data-legal="cookies">Política de cookies</button>
       <button class="fbtn" type="button" data-legal="privacidad">Política de privacidad</button>
     </nav>
-    <p class="f-copy">© 2026 Flor. Promoción válida en España. Consulta las bases legales del sorteo.</p>
+    <p class="f-copy">© 2026 <svg class="flor" viewBox="158 157 2519 1683" role="img" aria-label="Flor"><use href="#flor-logo"/></svg>. Promoción válida en España. Consulta las bases legales del sorteo.</p>
   </div>
 </footer>
 
 <dialog id="modal"><button class="m-close" type="button" aria-label="Cerrar">×</button><div class="m-in" id="modalBody"></div></dialog>
 
 <script>
+const LOGO = '<svg class="flor" viewBox="158 157 2519 1683" role="img" aria-label="Flor"><use href="#flor-logo"/></svg>';
 const FR = {
   azul:{name:"Flor Azul",short:"Azul",family:"Fresco · Limpio",color:"#2F55C9",perf:"Azul",img:"azul",
     title:"Frescor que te acompaña",
@@ -290,6 +345,7 @@ const testEl = document.getElementById("test");
 let answers = Array(Q.length).fill(null);
 let idx = -1; // -1 start, 0..4 questions, 5 result, 6 form, 7 done
 let first = true;
+let formFrom = null; // pantalla a la que vuelve el formulario
 
 function score(){
   const sc = {};
@@ -325,13 +381,13 @@ function render(){
 
 function renderStart(){
   app.innerHTML = `<section class="screen card narrow start">
-    <span class="eyebrow">Nueva gama FLOR</span>
-    <h2 style="font-size:clamp(46px,7.4vw,88px);line-height:.95;margin-top:18px">Descubre tu<br><em style="color:var(--accent)">fragancia</em> FLOR</h2>
+    <span class="eyebrow">Nueva gama ${LOGO}</span>
+    <h2 style="font-size:clamp(36px,5.6vw,64px);line-height:1.02;margin-top:18px">Descubre tu<br><em style="color:var(--accent)">fragancia</em> ${LOGO}</h2>
     <p class="lead">Cada aroma cuenta una historia. Responde 5 preguntas sobre lo que te hace sentir bien y descubre la fragancia que tu ropa estaba esperando.</p>
     <button class="btn btn-primary" id="go">Empezar el test</button>
     <div class="meta"><span><b>2 min</b> de duración</span><span><b>5</b> preguntas</span><span><b>8</b> fragancias</span></div>
     <div class="prize">${GIFT("#1B2350")}
-      <span>Compra un suavizante Flor y participa en el sorteo de una <br>Smartbox SPA <b>valorada en 79,90€.</b></span>
+      <span>Compra un suavizante ${LOGO} y participa en el sorteo de una <br>Smartbox SPA <b>valorada en 79,90€.</b></span>
     </div>
   </section>`;
   document.getElementById("go").onclick=()=>{idx=0;render();};
@@ -371,7 +427,7 @@ function renderResult(){
       <div class="bottle-stage"><img src="assets/productos/${f.img}.webp" alt="Botella de suavizante ${f.name}"></div>
       <div>
         <span class="eyebrow">Tu fragancia es</span>
-        <h2>${f.name.replace("Flor","Flor <em>")}</em></h2>
+        <h2>${LOGO} <em>${f.name.replace(/^Flor\s*/,"")}</em></h2>
         <span class="family">${f.family}</span>
         <p class="desc"><b style="color:var(--ink)">${f.title}.</b> ${f.desc}</p>
         <dl class="pyramid">
@@ -379,12 +435,12 @@ function renderResult(){
           <div><dt>Corazón</dt><dd>${f.mid}</dd></div>
           <div><dt>Fondo</dt><dd>${f.base}</dd></div>
         </dl>
-        <div class="combo"><img src="assets/perfumadores/${f.perf.toLowerCase()}.png" alt="" width="25" height="58"><span>Potencia su aroma combinándolo con <b>Flor Perfumador ${f.perf}</b>.</span></div>
+        <div class="combo"><img src="assets/perfumadores/${f.perf.toLowerCase()}.png" alt="" width="25" height="58"><span>Potencia su aroma combinándolo con <b>${LOGO} Perfumador ${f.perf}</b>.</span></div>
         <div class="sorteo">
           ${GIFT("#fff").replace('width="36" height="36"','width="54" height="54"')}
           <div>
             <h3>Gana una Smartbox SPA</h3>
-            <p>Compra un suavizante Flor y participa en el sorteo de una Smartbox SPA valorada en 79,90€.</p>
+            <p>Compra un suavizante ${LOGO} y participa en el sorteo de una Smartbox SPA <mark class="hl">valorada en 79,90€</mark>.</p>
             <button class="btn" id="toForm">Participar en el sorteo</button>
           </div>
         </div>
@@ -394,28 +450,30 @@ function renderResult(){
       </div>
     </div>
   </section>`;
-  document.getElementById("toForm").onclick=()=>{idx++;render();};
+  document.getElementById("toForm").onclick=()=>{formFrom=Q.length;idx++;render();};
   document.getElementById("redo").onclick=reset;
 }
 
 function renderForm(){
-  const f = FR[score().win];
+  const f = complete() ? FR[score().win] : null;
+  const backTo = formFrom ?? (complete() ? Q.length : -1);
+  const backTxt = backTo===Q.length ? "← Volver a mi resultado" : (backTo===-1 ? "← Volver al inicio" : "← Volver al test");
   app.innerHTML = `<section class="screen card narrow form-wrap">
     <span class="eyebrow" style="display:block;text-align:center;margin-bottom:10px">Sorteo Smartbox SPA</span>
-    <h2>Participa con tu ${f.short}</h2>
-    <p class="sub">Rellena tus datos y sube una foto del ticket de compra de cualquier suavizante FLOR.</p>
+    <h2>${f ? `Participa con tu ${f.short}` : "Participa en el sorteo"}</h2>
+    <p class="sub">Rellena tus datos y sube una foto del ticket de compra de cualquier producto ${LOGO} <a class="legal-link" href="#bases-productos" data-anchor="bases-productos">incluido en las bases legales de esta promoción</a>.</p>
     <form id="f" novalidate>
       <label class="f" for="nombre">Nombre y apellidos<input type="text" id="nombre" autocomplete="name" placeholder="Laura García"></label>
       <label class="f" for="email">Email<input type="email" id="email" autocomplete="email" placeholder="laura@email.com"></label>
       <label class="f" for="ticket">Ticket de compra<input type="file" id="ticket" accept="image/*,.pdf"></label>
-      <label class="check" for="bases"><input type="checkbox" id="bases"> <span>He leído y acepto las bases legales del sorteo y la política de privacidad.</span></label>
+      <label class="check" for="bases"><input type="checkbox" id="bases"> <span>He leído y acepto las <a class="legal-link" href="#bases" data-anchor="bases">bases legales</a> del sorteo y la política de privacidad.</span></label>
       <div class="err" id="err" role="alert"></div>
       <button class="btn btn-primary" type="submit">Enviar participación</button>
-      <button class="btn btn-ghost" type="button" id="back">← Volver a mi resultado</button>
+      <button class="btn btn-ghost" type="button" id="back">${backTxt}</button>
     </form>
     <p class="note">Prototipo: este formulario no envía datos.</p>
   </section>`;
-  document.getElementById("back").onclick=()=>{idx--;render();};
+  document.getElementById("back").onclick=()=>{idx=backTo;formFrom=null;render();};
   document.getElementById("f").addEventListener("submit",e=>{
     e.preventDefault();
     const n=document.getElementById("nombre").value.trim(), m=document.getElementById("email").value.trim();
@@ -440,34 +498,69 @@ function renderDone(){
   document.getElementById("redo").onclick=reset;
 }
 
-function reset(){answers=Array(Q.length).fill(null);idx=-1;document.documentElement.style.setProperty("--fr","#2F55C9");render();}
+function reset(){answers=Array(Q.length).fill(null);idx=-1;formFrom=null;document.documentElement.style.setProperty("--fr","#2F55C9");render();}
 
-/* Modal: revisión interna y textos legales */
+/* Modal: textos legales */
 const modal = document.getElementById("modal"), mBody = document.getElementById("modalBody");
-function openModal(html){ mBody.innerHTML = html; modal.showModal(); }
+function openModal(html,wide=false){ mBody.innerHTML = html; modal.classList.toggle("wide",wide); if(!modal.open) modal.showModal(); mBody.scrollTop=0; }
 modal.querySelector(".m-close").onclick=()=>modal.close();
 modal.addEventListener("click",e=>{ if(e.target===modal) modal.close(); });
 
-document.getElementById("openReview").onclick=()=>{
-  const answered = answers.filter(Boolean).length;
-  if(!complete()){
-    openModal(`<span class="eyebrow">Revisión interna</span><h3>Puntuación del test</h3>
-      <p>Aún no hay resultado: ${answered} de ${Q.length} preguntas respondidas. Completa el test para ver la puntuación de cada fragancia.</p>`);
-    return;
-  }
-  const {win,sc} = score();
-  const maxPts = W.reduce((a,b)=>a+b,0);
-  const rows = Object.keys(sc).sort((a,b)=>sc[b]-sc[a]).map(k=>`<div class="row ${k===win?'win':''}"><span>${FR[k].short}</span><span class="track"><i style="width:${sc[k]/maxPts*100}%;background:${FR[k].color}"></i></span><span>${sc[k]}/${maxPts}</span></div>`).join("");
-  openModal(`<span class="eyebrow">Revisión interna</span><h3>Puntuación del test</h3>
-    <p>Respuestas: ${answers.map((a,i)=>`P${i+1} ${a}`).join(" · ")}. P1 a P3 suman 2 puntos y P4 y P5 suman 1.</p>
-    <div class="scores">${rows}</div>`);
-};
+const PRODS = ["cerezo","orquidea","original","azul","medit","nenuco","delicias","pieles"];
+const BASES = `<span class="ex">Ejemplo · pendiente de validación legal</span>
+  <span class="eyebrow" style="display:block">Textos legales</span>
+  <h3 id="bases">Bases legales de la promoción «Descubre tu fragancia ${LOGO}»</h3>
+  <nav class="toc" aria-label="Índice de las bases"><span class="eyebrow">Índice</span><ol>
+    <li><a href="#bases-organizador" data-anchor="bases-organizador">Empresa organizadora</a></li>
+    <li><a href="#bases-ambito" data-anchor="bases-ambito">Ámbito y duración</a></li>
+    <li><a href="#bases-requisitos" data-anchor="bases-requisitos">Requisitos para participar</a></li>
+    <li><a href="#bases-productos" data-anchor="bases-productos">Productos que participan</a></li>
+    <li><a href="#bases-mecanica" data-anchor="bases-mecanica">Mecánica de participación</a></li>
+    <li><a href="#bases-premio" data-anchor="bases-premio">Premio</a></li>
+    <li><a href="#bases-sorteo" data-anchor="bases-sorteo">Sorteo y comunicación</a></li>
+    <li><a href="#bases-datos" data-anchor="bases-datos">Protección de datos</a></li>
+    <li><a href="#bases-aceptacion" data-anchor="bases-aceptacion">Aceptación de las bases</a></li>
+  </ol></nav>
+
+  <section class="bl" id="bases-organizador"><h4>1. Empresa organizadora</h4>
+    <p>[Razón social], con domicilio social en [Dirección] y CIF [CIF] (en adelante, «la Organizadora»), organiza la promoción «Descubre tu fragancia ${LOGO}», que se regirá por las presentes bases.</p></section>
+
+  <section class="bl" id="bases-ambito"><h4>2. Ámbito territorial y duración</h4>
+    <p>La promoción es válida en todo el territorio español. El periodo de participación comienza el [dd/mm/2026] a las 00:00 h y finaliza el [dd/mm/2027] a las 23:59 h. Solo serán válidas las compras realizadas dentro de dicho periodo.</p></section>
+
+  <section class="bl" id="bases-requisitos"><h4>3. Requisitos para participar</h4>
+    <ul><li>Ser persona física mayor de 18 años y residente legal en España.</li>
+      <li>Haber comprado al menos uno de los productos indicados en el apartado 4 en cualquier establecimiento de España.</li>
+      <li>Conservar el ticket original de compra, que podrá ser solicitado para validar el premio.</li></ul>
+    <p>No es necesario realizar el test de fragancias para participar en el sorteo. El test es una herramienta orientativa y no influye en las probabilidades de ganar.</p></section>
+
+  <section class="bl" id="bases-productos"><h4>4. Productos que participan en la promoción</h4>
+    <p>Participan en la promoción exclusivamente los siguientes productos ${LOGO}, en cualquiera de sus formatos disponibles en el punto de venta:</p>
+    <table class="ptable"><thead><tr><th></th><th>Producto</th><th>Familia olfativa</th></tr></thead><tbody>
+      ${PRODS.map(k=>`<tr><td><img src="assets/productos/${FR[k].img}.webp" alt="" width="17" height="44" loading="lazy"></td><td><b style="color:var(--ink)">Suavizante concentrado ${FR[k].name.replace(/^Flor/, LOGO)}</b></td><td>${FR[k].family}</td></tr>`).join("")}
+      ${["Azul","Rosa","Tropical"].map(p=>`<tr><td><img src="assets/perfumadores/${p.toLowerCase()}.png" alt="" width="19" height="44" loading="lazy"></td><td><b style="color:var(--ink)">${LOGO} Perfumador ${p}</b></td><td>Perfumador para la ropa</td></tr>`).join("")}
+    </tbody></table>
+    <p>Quedan excluidos de la promoción los productos no incluidos en este listado, así como las compras realizadas fuera del periodo promocional. [Listado de formatos y códigos EAN pendiente de confirmar].</p></section>
+
+  <section class="bl" id="bases-mecanica"><h4>5. Mecánica de participación</h4>
+    <ol><li>Comprar uno o varios productos participantes.</li>
+      <li>Acceder a esta página y pulsar «Sube aquí tu ticket».</li>
+      <li>Completar el formulario con nombre, apellidos y email, y adjuntar una foto legible del ticket donde se vean el establecimiento, la fecha, el producto y el importe.</li></ol>
+    <p>Cada ticket solo podrá registrarse una vez. Se permite una participación por ticket y un máximo de [X] participaciones por persona durante la promoción.</p></section>
+
+  <section class="bl" id="bases-premio"><h4>6. Premio</h4>
+    <p>Se sorteará [número] Smartbox SPA valorada en 79,90 € (IVA incluido). El premio no podrá canjearse por su valor en metálico ni cederse a terceros. La Organizadora se reserva el derecho a sustituirlo por otro de valor igual o superior.</p></section>
+
+  <section class="bl" id="bases-sorteo"><h4>7. Sorteo y comunicación al ganador</h4>
+    <p>El sorteo se realizará ante notario el [dd/mm/2027] entre todas las participaciones válidas. Se seleccionará también a [número] suplentes. La persona ganadora será contactada por email y dispondrá de [7] días naturales para aceptar el premio y enviar el ticket original.</p></section>
+
+  <section class="bl" id="bases-datos"><h4>8. Protección de datos</h4>
+    <p>Los datos facilitados serán tratados por la Organizadora para gestionar la participación en el sorteo y la entrega del premio, conforme a la política de privacidad. Puedes ejercer tus derechos escribiendo a [email de contacto].</p></section>
+
+  <section class="bl" id="bases-aceptacion"><h4>9. Aceptación de las bases</h4>
+    <p>La participación en la promoción implica la aceptación íntegra de estas bases. La Organizadora se reserva el derecho a excluir participaciones fraudulentas o que no cumplan los requisitos.</p></section>`;
 
 const LEGAL = {
-  legal:["Textos legales","Aviso legal",[
-    "Este sitio web y la promoción «Descubre tu fragancia Flor» son titularidad de [Razón social], con domicilio en [Dirección] y CIF [CIF].",
-    "Promoción válida en territorio español para mayores de 18 años. Para participar en el sorteo de una Smartbox SPA valorada en 79,90 € es necesario comprar cualquier suavizante Flor y subir una foto del ticket de compra.",
-    "Las bases legales completas del sorteo estarán disponibles ante notario y en esta página. [Texto pendiente de validación por el departamento legal]."]],
   cookies:["Política de cookies","Cookies",[
     "Este sitio utiliza cookies técnicas necesarias para su funcionamiento. Solo con tu consentimiento se utilizarán cookies analíticas o de personalización.",
     "Puedes configurar o rechazar las cookies en cualquier momento desde la configuración de tu navegador.",
@@ -477,10 +570,38 @@ const LEGAL = {
     "Legitimación: tu consentimiento al aceptar las bases legales. Los datos no se cederán a terceros salvo obligación legal.",
     "Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a [email de contacto]. [Texto pendiente de validación por el departamento legal]."]]
 };
+
+/* Abre las bases legales y, si se indica, salta al marcador */
+function openLegal(anchor){
+  const wasOpen = modal.open && !!mBody.querySelector("#bases");
+  if(!wasOpen) openModal(BASES,true);
+  const el = anchor && anchor!=="bases" ? mBody.querySelector("#"+anchor) : null;
+  if(!el){ mBody.scrollTop=0; return; }
+  setTimeout(()=>{
+    mBody.scrollTo({top:el.offsetTop-12,behavior:wasOpen?"smooth":"instant"});
+    mBody.querySelectorAll(".bl.flash").forEach(x=>x.classList.remove("flash"));
+    el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"),1800);
+  },30);
+}
+document.addEventListener("click",e=>{
+  const a = e.target.closest("[data-anchor]");
+  if(!a) return;
+  e.preventDefault();
+  openLegal(a.dataset.anchor);
+});
 document.querySelectorAll("[data-legal]").forEach(b=>b.onclick=()=>{
+  if(b.dataset.legal==="legal") return openLegal();
   const [t,e,ps] = LEGAL[b.dataset.legal];
   openModal(`<span class="eyebrow">${e}</span><h3>${t}</h3>${ps.map(p=>`<p>${p}</p>`).join("")}`);
 });
+
+/* Bloque «Sube aquí tu ticket»: va al formulario sin necesidad de hacer el test */
+document.getElementById("minis").innerHTML = PRODS.map(k=>`<img src="assets/productos/${FR[k].img}.webp" alt="" width="50" height="132">`).join("");
+document.getElementById("toTicket").onclick=()=>{
+  if(idx!==Q.length+1){ formFrom = idx>Q.length ? -1 : idx; idx = Q.length+1; }
+  render();
+};
+if(location.hash.startsWith("#bases")) openLegal(location.hash.slice(1));
 
 render();
 </script>
