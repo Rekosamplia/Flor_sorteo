@@ -45,12 +45,13 @@ h1 .flor,h2 .flor,h3 .flor,.st .flor{height:1.08em;vertical-align:-.29em}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:18%;background:linear-gradient(180deg,rgba(240,245,251,0),var(--bg));pointer-events:none}
 
 /* Steps */
-.steps{max-width:1140px;margin:0 auto;padding:10px 20px 0;display:grid;grid-template-columns:repeat(3,auto);justify-content:space-between;gap:24px;position:relative;z-index:1}
-.st{display:flex;align-items:center;gap:12px;justify-content:center}
-.st .n{font-weight:400;font-size:50px;line-height:.9;color:var(--ink)}
-.st .t{border-left:2px solid var(--gold);padding-left:12px;text-transform:uppercase;color:var(--ink)}
-.st .t b{display:block;white-space:nowrap;font-weight:600;font-size:17px;letter-spacing:.06em;line-height:1.15}
-.st .t > span{display:block;white-space:nowrap;font-size:11px;letter-spacing:.06em;line-height:1.35;margin-top:6px}
+/* Fila de pasos: todo en em sobre un tamaño base que se reduce con el ancho (11px a partir de ~1060px) */
+.steps{font-size:min(11px,calc((100vw - 40px) * .0102));max-width:1140px;margin:0 auto;padding:10px 20px 0;display:grid;grid-template-columns:repeat(3,auto);justify-content:center;column-gap:5.1em;position:relative;z-index:1}
+.st{display:flex;align-items:center;gap:1.1em;justify-content:center}
+.st .n{font-weight:400;font-size:4.55em;line-height:.9;color:var(--ink);-webkit-text-stroke:.016em currentColor}
+.st .t{border-left:2px solid var(--gold);padding-left:1.1em;text-transform:uppercase;color:var(--ink)}
+.st .t b{display:block;white-space:nowrap;font-weight:600;font-size:1.55em;-webkit-text-stroke:.012em currentColor;letter-spacing:.06em;line-height:1.15}
+.st .t > span{display:block;white-space:nowrap;font-size:1em;letter-spacing:.06em;line-height:1.35;margin-top:.55em;-webkit-text-stroke:.03em currentColor}
 
 /* Test container */
 .test{max-width:1040px;margin:0 auto;padding:72px 20px 80px;scroll-margin-top:0}
@@ -62,11 +63,13 @@ h1 .flor,h2 .flor,h3 .flor,.st .flor{height:1.08em;vertical-align:-.29em}
 .btn-primary{background:var(--ink);color:#fff}
 .btn-primary:hover:not(:disabled){background:var(--accent)}
 .btn-primary:disabled{opacity:.28;cursor:not-allowed}
+a.btn{text-decoration:none}
 .btn-ghost{background:transparent;color:var(--ink);padding-inline:4px}
 .btn-ghost:hover{color:var(--accent)}
 .btn:focus-visible,.tile:focus-visible,input:focus-visible,.fbtn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
 /* Start */
+.start-in{width:fit-content;max-width:100%;margin-inline:auto} /* bloque centrado, texto a la izquierda */
 .start p.lead{font-size:clamp(17px,1.9vw,20px);color:var(--ink-2);max-width:46ch;margin:26px 0 30px;line-height:1.6}
 .meta{display:flex;gap:24px;flex-wrap:wrap;margin-top:24px;font-size:14px;color:var(--muted)}
 .meta b{color:var(--ink);font-weight:600}
@@ -123,25 +126,11 @@ h1 .flor,h2 .flor,h3 .flor,.st .flor{height:1.08em;vertical-align:-.29em}
 .sorteo{margin-top:28px;padding:24px;background:var(--ink);color:#fff;border-radius:4px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
 .sorteo h3{font-size:22px;line-height:1.15}
 .sorteo p{margin:6px 0 16px;color:rgba(255,255,255,.75);font-size:14.5px}
+.sorteo a.btn{display:inline-block}
 .sorteo .btn{background:#fff;color:var(--ink)}
 .sorteo .btn:hover{background:var(--accent-soft)}
 .after{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px}
 
-/* Form */
-.form-wrap h2{font-size:clamp(26px,3.8vw,38px);line-height:1.1;text-align:center}
-.form-wrap .sub{text-align:center;color:var(--ink-2);margin:12px auto 28px;max-width:46ch}
-form{display:grid;gap:16px;background:var(--paper);border:1px solid var(--line);padding:26px;border-radius:4px}
-label.f{display:grid;gap:6px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--ink-2)}
-input[type=text],input[type=email],input[type=file]{font:inherit;font-size:15px;letter-spacing:0;text-transform:none;font-weight:400;color:var(--ink);border:1px solid var(--line);border-radius:2px;padding:12px 14px;background:var(--bg);width:100%}
-input[type=file]::file-selector-button{font-family:var(--font);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--ink);border:0;border-radius:2px;padding:8px 12px;margin-right:12px;cursor:pointer}
-input::placeholder{font-family:var(--font)}
-.check{display:flex;gap:10px;font-size:13.5px;color:var(--ink-2);align-items:flex-start}
-.check input{margin-top:3px;accent-color:var(--ink)}
-.err{color:#B3261E;font-size:13px;min-height:1em}
-.note{font-size:12px;color:var(--muted);text-align:center;margin-top:14px}
-.done{text-align:center}
-.done h2{font-size:clamp(28px,4vw,42px)}
-.done p{color:var(--ink-2)}
 
 .screen{animation:in .45s ease both}
 @keyframes in{from{opacity:.001;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -156,7 +145,6 @@ input::placeholder{font-family:var(--font)}
 .hl{background:var(--accent);color:#fff;font-weight:600;padding:2px 6px;border-radius:2px;white-space:nowrap}
 .sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;padding:0 16px calc(20px + env(safe-area-inset-bottom));pointer-events:none;transition:opacity .25s,transform .25s}
 .sticky-cta .btn{pointer-events:auto}
-body.no-cta .sticky-cta{opacity:0;transform:translateY(16px);visibility:hidden}
 .btn-cta{display:inline-flex;align-items:center;gap:12px;background:var(--accent);color:#fff;font-size:14px;padding:20px 34px;border-radius:3px;box-shadow:0 18px 34px -12px rgba(27,35,80,.55),0 0 0 1px rgba(255,255,255,.12)}
 .btn-cta:hover{background:var(--ink);transform:translateY(-2px)}
 .btn-cta svg{flex:none}
@@ -205,14 +193,16 @@ dialog.wide{max-width:min(860px,calc(100vw - 32px))}
 
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.screen,.bottle-stage img{animation:none}.tile,.bar i{transition:none}}
 
-@media (max-width:1000px){
-  .steps{grid-template-columns:auto;justify-content:center;gap:16px;padding-top:4px}
-  .st{justify-content:flex-start}
+@media (max-width:767px){
+  /* Móvil: pasos apilados en vertical */
+  .steps{font-size:11px;grid-template-columns:auto;justify-content:center;gap:16px;padding-top:4px}
+  .st{justify-content:flex-start;gap:12px}
+  .st .n{font-size:48px;width:36px}
+  .st .t{padding-left:12px}
+  .st .t b{font-size:16px}
+  .st .n,.st .t b,.st .t > span{-webkit-text-stroke:0}
 }
 @media (max-width:820px){
-  .st{justify-content:flex-start}
-  .st .n{font-size:48px;width:36px}
-  .st .t b{font-size:16px}
   .test{padding:44px 16px 56px}
   .card{padding:28px 20px}
   .result{grid-template-columns:1fr;gap:28px}
@@ -286,17 +276,18 @@ dialog.wide{max-width:min(860px,calc(100vw - 32px))}
   </div>
 </footer>
 
-<!-- CTA fijo: siempre visible al hacer scroll -->
+<!-- CTA fijo: siempre visible al hacer scroll. Enlace al formulario de Tally (cambiar la URL aquí) -->
 <div class="sticky-cta" id="stickyCta">
-  <button class="btn btn-cta" type="button" id="toTicket">
+  <a class="btn btn-cta" id="toTicket" href="https://tally.so/r/XXXXXX" target="_blank" rel="noopener">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
     Sube aquí tu ticket
-  </button>
+  </a>
 </div>
 
 <dialog id="modal"><button class="m-close" type="button" aria-label="Cerrar"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><div class="m-in" id="modalBody"></div></dialog>
 
 <script>
+const TALLY_URL = document.getElementById("toTicket").href; // formulario de participación
 const LOGO = '<svg class="flor" viewBox="158 157 2519 1683" role="img" aria-label="Flor"><use href="#flor-logo"/></svg>';
 const FR = {
   azul:{name:"Flor Azul",short:"Azul",family:"Fresco · Limpio",color:"#2F55C9",perf:"Azul",img:"azul",
@@ -365,9 +356,8 @@ const GIFT = c=>`<svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="tr
 const app = document.getElementById("app");
 const testEl = document.getElementById("test");
 let answers = Array(Q.length).fill(null);
-let idx = -1; // -1 start, 0..4 questions, 5 result, 6 form, 7 done
+let idx = -1; // -1 inicio, 0..4 preguntas, 5 resultado
 let first = true;
-let formFrom = null; // pantalla a la que vuelve el formulario
 
 function score(){
   const sc = {};
@@ -377,7 +367,6 @@ function score(){
   for(const q of [2,1,0]){ if(tied.length>1){ const t2=tied.filter(k=>SIG[k][q]===answers[q]); if(t2.length) tied=t2; } }
   return {win:tied[0], sc};
 }
-const complete = ()=>answers.every(Boolean);
 
 function progress(){
   let h='<nav class="progress" aria-label="Progreso">';
@@ -394,22 +383,19 @@ function render(){
     if(Math.abs(window.scrollY-top)>4) window.scrollTo({top,behavior:"smooth"});
   }
   first = false;
-  document.body.classList.toggle("no-cta", idx>Q.length); // en el formulario el CTA sobra
   if(idx===-1) return renderStart();
   if(idx<Q.length) return renderQ();
-  if(idx===Q.length) return renderResult();
-  if(idx===Q.length+1) return renderForm();
-  return renderDone();
+  return renderResult();
 }
 
 function renderStart(){
-  app.innerHTML = `<section class="screen card narrow start">
+  app.innerHTML = `<section class="screen card start"><div class="start-in">
     <span class="eyebrow">Nueva gama ${LOGO}</span>
     <h2 style="font-size:clamp(36px,5.6vw,64px);line-height:1.02;margin-top:18px">Descubre tu<br><em class="gilroy" style="color:var(--accent)">fragancia</em> ${LOGO}</h2>
     <p class="lead">Cada aroma cuenta una historia. Responde 5 preguntas sobre lo que te hace sentir bien y descubre la fragancia que tu ropa estaba esperando.</p>
     <button class="btn btn-primary" id="go">Empezar el test</button>
     <div class="meta"><span><b>2 min</b> de duración</span><span><b>5</b> preguntas</span><span><b>8</b> fragancias</span></div>
-  </section>`;
+  </div></section>`;
   document.getElementById("go").onclick=()=>{idx=0;render();};
 }
 
@@ -461,7 +447,7 @@ function renderResult(){
           <div>
             <h3>Gana una Smartbox SPA</h3>
             <p>Compra un suavizante ${LOGO} y participa en el sorteo de una Smartbox SPA <mark class="hl">valorada en 79,90€</mark>.</p>
-            <button class="btn" id="toForm">Participar en el sorteo</button>
+            <a class="btn" href="${TALLY_URL}" target="_blank" rel="noopener">Participar en el sorteo</a>
           </div>
         </div>
         <div class="after">
@@ -470,55 +456,10 @@ function renderResult(){
       </div>
     </div>
   </section>`;
-  document.getElementById("toForm").onclick=()=>{formFrom=Q.length;idx++;render();};
   document.getElementById("redo").onclick=reset;
 }
 
-function renderForm(){
-  const f = complete() ? FR[score().win] : null;
-  const backTo = formFrom ?? (complete() ? Q.length : -1);
-  const backTxt = backTo===Q.length ? "← Volver a mi resultado" : (backTo===-1 ? "← Volver al inicio" : "← Volver al test");
-  app.innerHTML = `<section class="screen card narrow form-wrap">
-    <span class="eyebrow" style="display:block;text-align:center;margin-bottom:10px">Sorteo Smartbox SPA</span>
-    <h2>${f ? `Participa con tu ${f.short}` : "Participa en el sorteo"}</h2>
-    <p class="sub">Rellena tus datos y sube una foto del ticket de compra de cualquier producto ${LOGO} <a class="legal-link" href="#bases-productos" data-anchor="bases-productos">incluido en las bases legales de esta promoción</a>.</p>
-    <form id="f" novalidate>
-      <label class="f" for="nombre">Nombre y apellidos<input type="text" id="nombre" autocomplete="name" placeholder="Laura García"></label>
-      <label class="f" for="email">Email<input type="email" id="email" autocomplete="email" placeholder="laura@email.com"></label>
-      <label class="f" for="ticket">Ticket de compra<input type="file" id="ticket" accept="image/*,.pdf"></label>
-      <label class="check" for="bases"><input type="checkbox" id="bases"> <span>He leído y acepto las <a class="legal-link" href="#bases" data-anchor="bases">bases legales</a> del sorteo y la política de privacidad.</span></label>
-      <div class="err" id="err" role="alert"></div>
-      <button class="btn btn-primary" type="submit">Enviar participación</button>
-      <button class="btn btn-ghost" type="button" id="back">${backTxt}</button>
-    </form>
-    <p class="note">Prototipo: este formulario no envía datos.</p>
-  </section>`;
-  document.getElementById("back").onclick=()=>{idx=backTo;formFrom=null;render();};
-  document.getElementById("f").addEventListener("submit",e=>{
-    e.preventDefault();
-    const n=document.getElementById("nombre").value.trim(), m=document.getElementById("email").value.trim();
-    const t=document.getElementById("ticket").files.length, b=document.getElementById("bases").checked;
-    const err=document.getElementById("err");
-    if(!n) return err.textContent="Escribe tu nombre para participar.";
-    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m)) return err.textContent="Revisa el email: parece que le falta algo.";
-    if(!t) return err.textContent="Sube una foto de tu ticket de compra.";
-    if(!b) return err.textContent="Acepta las bases legales para continuar.";
-    idx++;render();
-  });
-}
-
-function renderDone(){
-  app.innerHTML = `<section class="screen card narrow done">
-    <span class="eyebrow">Sorteo Smartbox SPA</span>
-    <h2 style="margin:12px 0">¡Ya estás participando!</h2>
-    <p>En la landing real aquí se confirmaría la participación y se enviaría un email. Mucha suerte.</p>
-    <div style="margin-top:24px"><button class="btn btn-primary" id="redo">Volver al inicio</button></div>
-    <p class="note">Prototipo: no se ha enviado ningún dato.</p>
-  </section>`;
-  document.getElementById("redo").onclick=reset;
-}
-
-function reset(){answers=Array(Q.length).fill(null);idx=-1;formFrom=null;document.documentElement.style.setProperty("--fr","#2F55C9");render();}
+function reset(){answers=Array(Q.length).fill(null);idx=-1;document.documentElement.style.setProperty("--fr","#2F55C9");render();}
 
 /* Modal: textos legales */
 const modal = document.getElementById("modal"), mBody = document.getElementById("modalBody");
@@ -615,12 +556,8 @@ document.querySelectorAll("[data-legal]").forEach(b=>b.onclick=()=>{
   openModal(`<span class="eyebrow">${e}</span><h3>${t}</h3>${ps.map(p=>`<p>${p}</p>`).join("")}`);
 });
 
-/* Bloque «Sube aquí tu ticket»: va al formulario sin necesidad de hacer el test */
+/* Bloque «Sube aquí tu ticket» */
 document.getElementById("minis").innerHTML = PRODS.map(k=>`<img src="assets/productos/${FR[k].img}.webp" alt="" width="50" height="132">`).join("");
-document.getElementById("toTicket").onclick=()=>{
-  if(idx!==Q.length+1){ formFrom = idx>Q.length ? -1 : idx; idx = Q.length+1; }
-  render();
-};
 if(location.hash.startsWith("#bases")) openLegal(location.hash.slice(1));
 
 render();
