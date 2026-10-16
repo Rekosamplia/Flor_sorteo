@@ -109,6 +109,9 @@ a.btn{text-decoration:none}
 .bottle-stage{background:linear-gradient(180deg,color-mix(in srgb,var(--fr) 12%,#fff),color-mix(in srgb,var(--fr) 30%,#fff));border-radius:4px;aspect-ratio:4/5;display:grid;place-items:center;position:relative;overflow:hidden;position:sticky;top:24px}
 .bottle-stage::before{content:"";position:absolute;width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.9),rgba(255,255,255,0) 70%);top:10%}
 .bottle-stage::after{content:"";position:absolute;bottom:7%;width:46%;height:5%;border-radius:50%;background:radial-gradient(ellipse,rgba(27,35,80,.28),rgba(27,35,80,0) 70%)}
+/* Vídeo de presentación del bote (assets/videos/<fragancia>.mp4); la imagen queda como alternativa */
+.bottle-stage video{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:cover;display:block}
+.bottle-stage.has-video::before,.bottle-stage.has-video::after{display:none}
 .bottle-stage img{position:absolute;z-index:1;inset:7% 0;margin:auto;height:84%;width:auto;max-width:none;filter:drop-shadow(0 22px 26px rgba(27,35,80,.2));animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
 @keyframes rise{from{opacity:.001;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
 .result .eyebrow{display:block;margin-bottom:8px}
@@ -212,6 +215,7 @@ dialog.wide{max-width:min(860px,calc(100vw - 32px))}
   .tile .art .glyph{right:8px;bottom:7px;max-width:calc(100% - 16px);font-size:calc((100cqw - 16px) / 4.6)}
   .tile .txt{padding:0}
   .bottle-stage{aspect-ratio:1;position:relative;top:0}
+  .bottle-stage video{object-position:50% 30%} /* recuadro cuadrado: deja aire sobre el tapón */
   .sorteo{grid-template-columns:1fr}
   .pyramid div{grid-template-columns:90px 1fr}
   .ticket{padding:0 16px 56px}
@@ -430,7 +434,7 @@ function renderResult(){
   document.documentElement.style.setProperty("--fr",f.color);
   app.innerHTML = `<section class="screen card">
     <div class="result">
-      <div class="bottle-stage"><img src="assets/productos/${f.img}.webp" alt="Botella de suavizante ${f.name}"></div>
+      <div class="bottle-stage has-video"><video src="assets/videos/${f.img}.mp4" muted playsinline autoplay loop preload="auto" aria-label="Animación de presentación del suavizante ${f.name}"></video></div>
       <div>
         <span class="eyebrow">Tu fragancia es</span>
         <h2>${LOGO} <em>${f.name.replace(/^Flor\s*/,"")}</em></h2>
@@ -457,6 +461,18 @@ function renderResult(){
     </div>
   </section>`;
   document.getElementById("redo").onclick=reset;
+  playBottle(f);
+}
+
+/* Reproduce el vídeo del bote en bucle; si falla o se pide menos movimiento, se ve la imagen fija */
+function playBottle(f){
+  const stage = app.querySelector(".bottle-stage"), v = stage.querySelector("video");
+  const fallback = ()=>{ stage.classList.remove("has-video"); stage.innerHTML = `<img src="assets/productos/${f.img}.webp" alt="Botella de suavizante ${f.name}">`; };
+  const still = ()=>{ v.removeAttribute("autoplay"); v.loop = false; v.pause(); v.poster = `assets/videos/${f.img}.webp`; };
+  v.addEventListener("error", fallback);
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return still();
+  v.muted = true;
+  const p = v.play(); if(p) p.catch(still); // si el navegador bloquea el autoplay, se ve la imagen fija
 }
 
 function reset(){answers=Array(Q.length).fill(null);idx=-1;document.documentElement.style.setProperty("--fr","#2F55C9");render();}
