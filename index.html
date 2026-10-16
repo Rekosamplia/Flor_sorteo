@@ -93,8 +93,8 @@ a.btn{text-decoration:none}
 .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:900px;margin:0 auto}
 .tile{appearance:none;font:inherit;color:inherit;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:14px;transition:border-color .2s,transform .2s,box-shadow .2s}
 .tile:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(27,35,80,.35)}
-.tile .art{aspect-ratio:4/3;border-radius:2px;position:relative;overflow:hidden}
-.tile .art .glyph{position:absolute;right:12px;bottom:10px;font-weight:600;font-size:22px;letter-spacing:-.01em;line-height:1;color:rgba(255,255,255,.92);text-shadow:0 1px 12px rgba(0,0,0,.08)}
+.tile .art{aspect-ratio:4/3;border-radius:2px;position:relative;overflow:hidden;container-type:inline-size}
+.tile .art .glyph{position:absolute;right:12px;bottom:10px;max-width:calc(100% - 24px);white-space:nowrap;font-weight:600;font-size:min(22px,calc((100cqw - 24px) / 4.6)) /* cabe la palabra más larga (7 letras) */;letter-spacing:-.01em;line-height:1;color:rgba(255,255,255,.92);text-shadow:0 1px 12px rgba(0,0,0,.08)}
 .tile .txt{padding:0 6px 8px;display:flex;gap:12px;align-items:flex-start}
 .tile .radio{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);flex:none;margin-top:2px;position:relative;transition:border-color .2s}
 .tile .label{font-size:14px;line-height:1.45;color:var(--ink-2)}
@@ -209,7 +209,7 @@ dialog.wide{max-width:min(860px,calc(100vw - 32px))}
   .tiles{grid-template-columns:1fr;gap:12px}
   .tile{flex-direction:row;align-items:center}
   .tile .art{width:96px;flex:none;aspect-ratio:1}
-  .tile .art .glyph{font-size:30px;right:8px;bottom:4px}
+  .tile .art .glyph{right:8px;bottom:7px;max-width:calc(100% - 16px);font-size:calc((100cqw - 16px) / 4.6)}
   .tile .txt{padding:0}
   .bottle-stage{aspect-ratio:1;position:relative;top:0}
   .sorteo{grid-template-columns:1fr}
