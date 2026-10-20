@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+<defs>
+<filter id="b1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.2"/></filter>
+<filter id="b3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="b8" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8"/></filter>
+
+</defs>
+<circle cx="290" cy="110" r="38" fill="#FFF4D6" opacity=".7" filter="url(#b3)"/><circle cx="290" cy="110" r="80" fill="#fff" opacity=".2" filter="url(#b8)"/><path d="M-10 178 q 25 -12 50 0 t 50 0 t 50 0 t 50 0 t 50 0 t 50 0 t 50 0 t 50 0 t 50 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.6" filter="url(#b1)"/><path d="M-10 198 q 25 -12 50 0 t 50 0 t 50 0 t 50 0 t 50 0 t 50 0 t 50 0 t 50 0 t 50 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.45" filter="url(#b1)"/><path d="M-10 222 q 25 -12 50 0 t 50 0 t 50 0 t 50 0 t 50 0 t 50 0 t 50 0 t 50 0 t 50 0" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.35" filter="url(#b1)"/><g opacity=".55" filter="url(#b1)"><path d="M110 168 l0 -58 l34 50 z" fill="#fff"/><path d="M100 170 h52 l-8 10 h-36z" fill="#fff"/></g><path d="M60 70 q 6 -6 12 0 q 6 -6 12 0" stroke="#fff" stroke-width="2" fill="none" opacity=".55"/><path d="M90 55 q 6 -6 12 0 q 6 -6 12 0" stroke="#fff" stroke-width="2" fill="none" opacity=".55"/><path d="M200 60 q 6 -6 12 0 q 6 -6 12 0" stroke="#fff" stroke-width="2" fill="none" opacity=".55"/>
+</svg>

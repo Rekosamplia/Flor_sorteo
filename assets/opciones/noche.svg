@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+<defs>
+<filter id="b1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.2"/></filter>
+<filter id="b3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="b8" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8"/></filter>
+
+</defs>
+<path d="M300 50 a 46 46 0 1 0 38 72 a 36 36 0 1 1 -38 -72z" fill="#FFF3C4" opacity=".7" filter="url(#b1)"/><circle cx="310" cy="85" r="70" fill="#FFE59A" opacity=".18" filter="url(#b8)"/><circle cx="80" cy="220" r="26" fill="#FFD3E2" opacity="0.35" filter="url(#b3)"/><circle cx="150" cy="250" r="18" fill="#FFE59A" opacity="0.35" filter="url(#b3)"/><circle cx="230" cy="230" r="30" fill="#fff" opacity="0.22" filter="url(#b3)"/><circle cx="330" cy="250" r="20" fill="#FFC4D6" opacity="0.3" filter="url(#b3)"/><circle cx="40" cy="150" r="14" fill="#fff" opacity="0.25" filter="url(#b3)"/><path transform="translate(120 80)" d="M0 -9 C 1.08 -1.08 1.08 -1.08 9 0 C 1.08 1.08 1.08 1.08 0 9 C -1.08 1.08 -1.08 1.08 -9 0 C -1.08 -1.08 -1.08 -1.08 0 -9Z" fill="#fff" opacity="0.6"/><path transform="translate(200 50)" d="M0 -6 C 0.72 -0.72 0.72 -0.72 6 0 C 0.72 0.72 0.72 0.72 0 6 C -0.72 0.72 -0.72 0.72 -6 0 C -0.72 -0.72 -0.72 -0.72 0 -6Z" fill="#fff" opacity="0.5"/><path transform="translate(380 180)" d="M0 -7 C 0.84 -0.84 0.84 -0.84 7 0 C 0.84 0.84 0.84 0.84 0 7 C -0.84 0.84 -0.84 0.84 -7 0 C -0.84 -0.84 -0.84 -0.84 0 -7Z" fill="#fff" opacity="0.5"/>
+</svg>
