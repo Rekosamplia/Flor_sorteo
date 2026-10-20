@@ -292,6 +292,9 @@ dialog.wide{max-width:min(860px,calc(100vw - 32px))}
 
 <script>
 const TALLY_URL = document.getElementById("toTicket").href; // formulario de participación
+// URL de la aplicación web de Google Apps Script que guarda cada test en la hoja de cálculo
+// (ver tools/google-sheets/README.md). Vacía = no se envía nada.
+const SHEETS_URL = "";
 const LOGO = '<svg class="flor" viewBox="158 157 2519 1683" role="img" aria-label="Flor"><use href="#flor-logo"/></svg>';
 const FR = {
   azul:{name:"Flor Azul",short:"Azul",family:"Fresco · Limpio",color:"#2F55C9",perf:"Azul",img:"azul",
@@ -362,6 +365,7 @@ const testEl = document.getElementById("test");
 let answers = Array(Q.length).fill(null);
 let idx = -1; // -1 inicio, 0..4 preguntas, 5 resultado
 let first = true;
+let sent = false; // el test actual ya se ha guardado en la hoja
 
 function score(){
   const sc = {};
@@ -431,6 +435,7 @@ function renderQ(){
 
 function renderResult(){
   const {win} = score(); const f = FR[win];
+  saveTest();
   document.documentElement.style.setProperty("--fr",f.color);
   app.innerHTML = `<section class="screen card">
     <div class="result">
@@ -475,7 +480,30 @@ function playBottle(f){
   const p = v.play(); if(p) p.catch(still); // si el navegador bloquea el autoplay, se ve la imagen fija
 }
 
-function reset(){answers=Array(Q.length).fill(null);idx=-1;document.documentElement.style.setProperty("--fr","#2F55C9");render();}
+function reset(){answers=Array(Q.length).fill(null);idx=-1;sent=false;document.documentElement.style.setProperty("--fr","#2F55C9");render();}
+
+/* Guarda el test completado en Google Sheets (una fila por test). No incluye datos personales. */
+function saveTest(){
+  if(sent || !SHEETS_URL) return;
+  sent = true;
+  const {win, sc} = score();
+  const qs = new URLSearchParams(location.search);
+  const puntos = {}; for(const k in sc) puntos[FR[k].short] = sc[k];
+  const data = {
+    id: (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2)),
+    resultado: FR[win].name,
+    respuestas: answers.map((a,i)=>`${a} · ${Q[i].opts["ABC".indexOf(a)].t}`),
+    puntos,
+    dispositivo: matchMedia("(max-width: 767px)").matches ? "Móvil" : (matchMedia("(max-width: 1024px)").matches ? "Tablet" : "Escritorio"),
+    idioma: navigator.language || "",
+    origen: document.referrer || "Directo",
+    utm_source: qs.get("utm_source") || "", utm_medium: qs.get("utm_medium") || "", utm_campaign: qs.get("utm_campaign") || "",
+    pagina: location.origin + location.pathname,
+  };
+  // text/plain evita la petición previa CORS que Apps Script no admite; no-cors porque no necesitamos leer la respuesta
+  fetch(SHEETS_URL, {method:"POST", mode:"no-cors", keepalive:true, headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(data)})
+    .catch(()=>{ sent = false; });
+}
 
 /* Modal: textos legales */
 const modal = document.getElementById("modal"), mBody = document.getElementById("modalBody");
@@ -545,6 +573,7 @@ const LEGAL = {
   privacidad:["Política de privacidad","Privacidad",[
     "Responsable del tratamiento: [Razón social]. Finalidad: gestionar tu participación en el sorteo y, en su caso, la entrega del premio.",
     "Legitimación: tu consentimiento al aceptar las bases legales. Los datos no se cederán a terceros salvo obligación legal.",
+    "Las respuestas del test de fragancias se guardan de forma anónima, sin nombre, email ni otros datos que te identifiquen, para elaborar estadísticas de la promoción.",
     "Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a [email de contacto]. [Texto pendiente de validación por el departamento legal]."]]
 };
 
