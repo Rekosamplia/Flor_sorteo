@@ -96,7 +96,7 @@ a.btn{text-decoration:none}
 .q-head .eyebrow{margin-bottom:10px;display:block}
 .q-head h2{font-size:clamp(24px,3.2vw,34px);line-height:1.15;max-width:24ch;margin-inline:auto}
 .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:900px;margin:0 auto}
-.tile{appearance:none;font:inherit;color:inherit;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:14px;transition:border-color .2s,transform .2s,box-shadow .2s}
+.tile{appearance:none;font:inherit;color:inherit;text-align:left;background:transparent;border:1px solid transparent;border-radius:4px;padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:14px;transition:border-color .2s,transform .2s,box-shadow .2s}
 .tile:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(27,35,80,.35)}
 .tile .art{aspect-ratio:4/3;border-radius:2px;position:relative;overflow:hidden;container-type:inline-size}
 .tile .art .glyph{position:absolute;right:12px;bottom:10px;max-width:calc(100% - 24px);white-space:nowrap;font-weight:600;font-size:min(22px,calc((100cqw - 24px) / 4.6)) /* cabe la palabra más larga (7 letras) */;letter-spacing:-.01em;line-height:1;color:rgba(255,255,255,.92);text-shadow:0 1px 12px rgba(0,0,0,.08)}
