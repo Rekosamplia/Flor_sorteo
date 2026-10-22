@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Informe del test Flor</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo/favicon.svg">
+<style>
+@font-face{font-family:"Moderat Extended";src:url("assets/fonts/ModeratExtended-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"Moderat Extended";src:url("assets/fonts/ModeratExtended-SemiBold.otf") format("opentype");font-weight:600;font-display:swap}
+:root{
+  color-scheme:light;
+  --page:#F0F5FB; --surface:#FFFFFF; --surface-2:#F5F7FC; --line:#E1E5F0; --grid:#E8EBF3; --axis:#C9CFDF;
+  --ink:#1B2350; --ink-2:#4A5178; --muted:#7C82A3; --nav:#232850;
+  --bar:#2F55C9; --bar-wash:rgba(47,85,201,.12); --accent:#2F55C9;
+  --font:"Moderat Extended", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:where(:not([data-theme="light"])){
+    color-scheme:dark;
+    --page:#0F1226; --surface:#171B33; --surface-2:#1D2240; --line:#2A3052; --grid:#252A49; --axis:#384068;
+    --ink:#EEF0FA; --ink-2:#C2C7DE; --muted:#8C92B3; --nav:#0B0E1F;
+    --bar:#6688EC; --bar-wash:rgba(102,136,236,.16); --accent:#8EA8F2;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#0F1226; --surface:#171B33; --surface-2:#1D2240; --line:#2A3052; --grid:#252A49; --axis:#384068;
+  --ink:#EEF0FA; --ink-2:#C2C7DE; --muted:#8C92B3; --nav:#0B0E1F;
+  --bar:#6688EC; --bar-wash:rgba(102,136,236,.16); --accent:#8EA8F2;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Cabecera */
+.top{background:var(--nav);color:#fff}
+.top-in{max-width:1280px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.top img{height:34px;width:auto}
+.top h1{font-size:15px;font-weight:600;margin:0;letter-spacing:.02em}
+.top .upd{font-size:12px;color:rgba(255,255,255,.6)}
+.top .sp{flex:1}
+.tbtn{appearance:none;border:1px solid rgba(255,255,255,.28);background:transparent;color:#fff;border-radius:99px;padding:8px 14px;font-size:12px;font-weight:600;letter-spacing:.06em;cursor:pointer}
+.tbtn:hover{background:rgba(255,255,255,.1)}
+.tbtn:focus-visible,.chip:focus-visible,select:focus-visible,input:focus-visible,.pbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+main{max-width:1280px;margin:0 auto;padding:20px 20px 60px}
+.banner{background:var(--surface);border:1px solid var(--line);border-left:4px solid #E3A008;border-radius:6px;padding:12px 16px;margin-bottom:16px;color:var(--ink-2);font-size:13px}
+.banner b{color:var(--ink)}
+
+/* Filtros: una fila sobre los gráficos */
+.filters{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-bottom:18px}
+.chips{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:3px}
+.chip{appearance:none;border:0;background:transparent;border-radius:99px;padding:6px 12px;font-size:12.5px;cursor:pointer;color:var(--ink-2)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);font-weight:600}
+.fsel{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+select{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13px}
+.count-note{margin-left:auto;font-size:12px;color:var(--muted)}
+
+/* Rejilla */
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;min-width:0}
+.card h2{font-size:14px;font-weight:600;margin:0 0 2px}
+.card .sub{font-size:12px;color:var(--muted);margin:0 0 14px}
+.c3{grid-column:span 3}.c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:span 12}
+
+/* Indicadores */
+.hero .v{font-size:52px;font-weight:600;line-height:1.05;letter-spacing:-.02em;margin-top:6px}
+.tile .l,.hero .l{font-size:12px;color:var(--ink-2)}
+.tile .v{font-size:26px;font-weight:600;line-height:1.15;margin-top:6px}
+.tile .d{font-size:12px;color:var(--muted);margin-top:4px}
+.tile .v small{font-size:13px;font-weight:400;color:var(--muted)}
+
+/* Listas de barras horizontales (un solo tono; el valor siempre visible) */
+.bars{display:grid;gap:9px}
+.brow{display:grid;grid-template-columns:minmax(120px,190px) 1fr 74px;gap:12px;align-items:center;font-size:13px}
+.brow .lab{display:flex;align-items:center;gap:8px;min-width:0;color:var(--ink)}
+.brow .lab span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brow .lab img{width:auto;height:26px;flex:none}
+.track{height:14px;position:relative}
+.track i{position:absolute;left:0;top:1px;bottom:1px;background:var(--bar);border-radius:0 4px 4px 0;min-width:2px}
+.brow .num{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+.brow .num small{color:var(--muted)}
+.brow:hover .track i{filter:brightness(1.08)}
+.empty{color:var(--muted);font-size:13px;padding:10px 0}
+
+/* Preguntas: pequeños múltiplos */
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px 26px}
+.q h3{font-size:12.5px;font-weight:600;margin:0 0 10px;color:var(--ink)}
+.q h3 em{font-style:normal;color:var(--muted);font-weight:400}
+.q .brow{grid-template-columns:minmax(0,1fr) 90px 66px}
+.q .brow .lab span{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.3}
+
+/* Gráfico por días */
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.tip{position:fixed;z-index:20;pointer-events:none;background:var(--ink);color:var(--surface);border-radius:6px;padding:7px 10px;font-size:12px;line-height:1.35;box-shadow:0 8px 20px -8px rgba(0,0,0,.4);opacity:0;transition:opacity .12s}
+.tip b{font-weight:600}
+
+/* Tabla */
+.tbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.tbar input{flex:1;min-width:200px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:13px}
+.pbtn{appearance:none;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 12px;font-size:12.5px;cursor:pointer}
+.pbtn:disabled{opacity:.4;cursor:default}
+.twrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;white-space:nowrap}
+th{position:sticky;top:0;background:var(--surface-2);text-align:left;font-weight:600;color:var(--ink-2);padding:9px 12px;border-bottom:1px solid var(--line)}
+td{padding:8px 12px;border-bottom:1px solid var(--grid);font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+.res{display:inline-flex;align-items:center;gap:8px;vertical-align:middle}
+.res img{height:22px;width:auto}
+.ans{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px;background:var(--bar-wash);color:var(--ink);font-weight:600;font-size:11.5px}
+.pager{display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:10px;font-size:12px;color:var(--muted)}
+
+/* Acceso */
+.login{max-width:420px;margin:80px auto;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:28px}
+.login h2{margin:0 0 6px;font-size:18px}
+.login p{color:var(--ink-2);font-size:13px;margin:0 0 16px}
+.login input{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:12px}
+.login button{width:100%;appearance:none;border:0;background:var(--ink);color:var(--surface);border-radius:8px;padding:11px;font-weight:600;cursor:pointer}
+.login .err{color:#C62828;font-size:12.5px;min-height:1.2em;margin-top:8px}
+.loading{text-align:center;color:var(--muted);padding:80px 0}
+
+@media (max-width:1000px){.c3{grid-column:span 6}.c4,.c5,.c6,.c7,.c8{grid-column:span 12}}
+@media (max-width:560px){.c3{grid-column:span 12}.hero .v{font-size:44px}.brow{grid-template-columns:minmax(90px,130px) 1fr 64px}main{padding:16px 12px 40px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <img src="assets/logo/flor-logo-blanco.svg" alt="Flor" width="51" height="34">
+  <h1>Informe del test de fragancias</h1>
+  <span class="upd" id="upd"></span>
+  <span class="sp"></span>
+  <button class="tbtn" id="btnRefresh" type="button" hidden>Actualizar</button>
+  <button class="tbtn" id="btnCsv" type="button" hidden>Descargar CSV</button>
+  <button class="tbtn" id="btnOut" type="button" hidden>Salir</button>
+</div></header>
+
+<main id="main"><p class="loading">Cargando…</p></main>
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<script>
+/* ---------- Configuración ----------
+   DATA_URL: la misma URL /exec de Google Apps Script que usa la landing (SHEETS_URL en index.html).
+   Vacía o con ?demo en la dirección → se muestran datos de ejemplo. */
+const DATA_URL = "";
+
+const FRAG = [ // nombre en la hoja → imagen del bote
+  ["Flor Azul","azul"],["Flor Nenuco","nenuco"],["Flor Original","original"],["Flor Mediterráneo","medit"],
+  ["Flor de Cerezo y Frambuesa","cerezo"],["Flor Delicias de Verano","delicias"],["Flor Pieles Sensibles","pieles"],["Flor Orquídea Blanca","orquidea"]];
+const IMG = Object.fromEntries(FRAG);
+const PREG = ["Tipo de aroma","Cómo se siente","Ingredientes","Plan para desconectar","Frase"];
+const KEY_STORE = "flor_dashboard_clave";
+
+const main = document.getElementById("main"), tip = document.getElementById("tip");
+const $ = (s, el=document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const nf = new Intl.NumberFormat("es-ES");
+const pct = (a, b) => b ? Math.round(a/b*100) : 0;
+const store = { get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }, set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }, del(k){ try{ localStorage.removeItem(k); }catch(e){} } };
+
+let ROWS = [], DEMO = false, state = { period:"30", device:"", source:"", q:"", page:0 };
+
+/* ---------- Datos ---------- */
+function normalize(columnas, filas){
+  const ix = n => columnas.indexOf(n);
+  const pc = columnas.map((c,i)=>/^P[1-5]/.test(c)?i:-1).filter(i=>i>=0);
+  return filas.map(r => {
+    const src = r[ix("utm_source")] || refHost(r[ix("Origen")]);
+    return {
+      fecha: new Date(r[ix("Fecha")]), id: String(r[ix("ID participación")]||""), resultado: String(r[ix("Fragancia resultado")]||""),
+      resp: pc.map(i => String(r[i]||"")), dispositivo: String(r[ix("Dispositivo")]||""), idioma: String(r[ix("Idioma")]||""),
+      origen: src, medio: String(r[ix("utm_medium")]||""), campana: String(r[ix("utm_campaign")]||""),
+    };
+  }).filter(r => !isNaN(r.fecha));
+}
+function refHost(v){ v = String(v||""); if(!v || v === "Directo") return "Directo"; try{ return new URL(v).hostname.replace(/^www\./,""); }catch(e){ return v; } }
+
+async function loadRemote(clave){
+  const res = await fetch(DATA_URL, { method:"POST", body: JSON.stringify({ accion:"leer", clave }) }); // text/plain: sin petición previa CORS
+  const d = await res.json();
+  if(!d.ok) throw new Error(d.error || "Error al leer los datos");
+  return { rows: normalize(d.columnas, d.filas), actualizado: new Date(d.actualizado) };
+}
+
+function demoData(){
+  const Q = [["Fresco y limpio","Floral y envolvente","Frutal y dulce"],["Suave y reconfortante","Fresca y ligera","Intensa y duradera"],
+    ["Lavanda, azahar y almizcle blanco","Jazmín, rosa y frutas jugosas","Bergamota, hierbas y maderas"],["En casa","Al aire libre","Con amigos o en una noche especial"],
+    ["“Lo sencillo es lo que mejor funciona.”","“Que no falten la libertad ni los planes improvisados.”","“Los pequeños detalles lo cambian todo.”"]];
+  const SIG = {azul:"ABABA",nenuco:"AAAAA",original:"ABBAA",medit:"ABCBB",pieles:"BAAAC",orquidea:"BCCCC",cerezo:"CCBCB",delicias:"CABBB"}, W=[2,2,2,1,1];
+  const ORDER = ["nenuco","pieles","original","azul","medit","cerezo","delicias","orquidea"];
+  const name = Object.fromEntries(FRAG.map(([n,k])=>[k,n]));
+  let seed = 7; const rnd = () => (seed = (seed*16807) % 2147483647) / 2147483647;
+  const pick = (arr, w) => { let t = rnd()*w.reduce((a,b)=>a+b,0); for(let i=0;i<arr.length;i++){ if((t-=w[i])<0) return arr[i]; } return arr.at(-1); };
+  const rows = [], now = new Date();
+  for(let d=34; d>=0; d--){
+    const n = Math.round(6 + 10*Math.sin(d/5)**2 + rnd()*8 + (d<10 ? 8 : 0));
+    for(let k=0;k<n;k++){
+      const a = [0,1,2,3,4].map(i => pick("ABC", i===0?[5,3,2]:[4,3,3]));
+      const sc = {}; for(const f in SIG){ sc[f]=0; a.forEach((x,i)=>{ if(SIG[f][i]===x) sc[f]+=W[i]; }); }
+      const max = Math.max(...Object.values(sc)); const win = ORDER.find(f=>sc[f]===max);
+      const f = new Date(now); f.setDate(f.getDate()-d); f.setHours(8+Math.floor(rnd()*15), Math.floor(rnd()*60));
+      if(f > now) continue;
+      const src = pick(["instagram","Directo","facebook","google.com","tiktok"],[5,3,2,2,2]);
+      rows.push({ fecha:f, id:Math.random().toString(16).slice(2,10)+"-demo", resultado:name[win],
+        resp:a.map((x,i)=>`${x} · ${Q[i]["ABC".indexOf(x)]}`), dispositivo:pick(["Móvil","Escritorio","Tablet"],[7,2.5,.6]), idioma:"es",
+        origen:src, medio: src==="instagram"||src==="facebook"||src==="tiktok" ? "social" : "", campana: src==="instagram"||src==="tiktok" ? "flor_otono" : "" });
+    }
+  }
+  return rows;
+}
+
+/* ---------- Filtros ---------- */
+function filtered(){
+  const now = new Date(), start = new Date(now);
+  if(state.period === "hoy") start.setHours(0,0,0,0);
+  else if(state.period !== "todo"){ start.setDate(start.getDate() - (+state.period - 1)); start.setHours(0,0,0,0); }
+  return ROWS.filter(r => (state.period === "todo" || r.fecha >= start)
+    && (!state.device || r.dispositivo === state.device) && (!state.source || r.origen === state.source));
+}
+const countBy = (rows, fn) => { const m = new Map(); rows.forEach(r => { const k = fn(r); if(k) m.set(k, (m.get(k)||0)+1); }); return [...m].sort((a,b)=>b[1]-a[1]); };
+const dayKey = d => d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const fmtDay = d => d.toLocaleDateString("es-ES",{day:"numeric",month:"short"});
+const fmtDT = d => d.toLocaleString("es-ES",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});
+
+/* ---------- Render ---------- */
+function barList(items, total, opts={}){
+  if(!items.length) return '<p class="empty">Sin datos en este periodo.</p>';
+  const max = Math.max(...items.map(x=>x[1]));
+  return `<div class="bars">${items.map(([k,v]) => `<div class="brow" data-tip="<b>${esc(k)}</b><br>${nf.format(v)} tests · ${pct(v,total)} %">
+    <span class="lab">${opts.img && IMG[k] ? `<img src="assets/productos/${IMG[k]}.webp" alt="" loading="lazy">` : ""}<span title="${esc(k)}">${esc(opts.label ? opts.label(k) : k)}</span></span>
+    <span class="track"><i style="width:${v/max*100}%"></i></span>
+    <span class="num">${nf.format(v)} <small>${pct(v,total)}%</small></span></div>`).join("")}</div>`;
+}
+
+function dayChart(rows){
+  if(!rows.length) return '<p class="empty">Sin datos en este periodo.</p>';
+  const first = new Date(Math.min(...rows.map(r=>r.fecha))); first.setHours(0,0,0,0);
+  const last = new Date(); last.setHours(0,0,0,0);
+  const days = []; for(let d=new Date(first); d<=last; d.setDate(d.getDate()+1)) days.push(new Date(d));
+  const counts = new Map(countBy(rows, r=>dayKey(r.fecha)));
+  const vals = days.map(d => counts.get(dayKey(d))||0);
+  const W = Math.max(320, ($("#dayc")?.clientWidth || 700)), H = 230, L = 34, B = 26, T = 10;
+  const max = Math.max(1, ...vals), step = niceStep(max), top = Math.ceil(max/step)*step;
+  const slot = (W-L)/days.length, bw = Math.min(24, Math.max(2, slot - 2));
+  const y = v => T + (H-T-B) * (1 - v/top);
+  const ticks = []; for(let v=0; v<=top; v+=step) ticks.push(v);
+  const every = Math.ceil(days.length / Math.max(2, Math.floor((W-L)/70)));
+  const bars = vals.map((v,i) => {
+    const x = L + i*slot + (slot-bw)/2, h = (H-T-B) - (y(v)-T);
+    const r = Math.min(4, bw/2, h);
+    const path = v ? `M${x} ${H-B} V${y(v)+r} q0 -${r} ${r} -${r} H${x+bw-r} q${r} 0 ${r} ${r} V${H-B} Z` : "";
+    return `<g class="col" data-tip="<b>${fmtDay(days[i])}</b><br>${nf.format(v)} tests"><rect x="${L+i*slot}" y="${T}" width="${slot}" height="${H-T-B}" fill="transparent"/>${path?`<path d="${path}" fill="var(--bar)"/>`:""}</g>`;
+  }).join("");
+  const peak = vals.indexOf(max);
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Tests completados por día">
+    ${ticks.map(v=>`<line x1="${L}" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="var(--muted)">${v}</text>`).join("")}
+    <line x1="${L}" x2="${W}" y1="${H-B}" y2="${H-B}" stroke="var(--axis)"/>
+    ${bars}
+    ${days.map((d,i)=> i%every===0 ? `<text x="${L+i*slot+slot/2}" y="${H-8}" text-anchor="middle" font-size="11" fill="var(--muted)">${fmtDay(d)}</text>` : "").join("")}
+    ${max>0?`<text x="${L+peak*slot+slot/2}" y="${y(max)-6}" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">${max}</text>`:""}
+  </svg>`;
+}
+function niceStep(max){ const raw = max/4, p = Math.pow(10, Math.floor(Math.log10(raw||1))); return [1,2,5,10].map(m=>m*p).find(s=>s>=raw) || p*10; }
+
+function render(){
+  const rows = filtered(), total = rows.length;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const w7 = new Date(today); w7.setDate(w7.getDate()-6);
+  const all7 = ROWS.filter(r=>r.fecha>=w7).length, allHoy = ROWS.filter(r=>r.fecha>=today).length;
+  const movil = rows.filter(r=>r.dispositivo==="Móvil").length;
+  const top = countBy(rows, r=>r.resultado)[0];
+  const sources = countBy(ROWS, r=>r.origen).map(x=>x[0]);
+  if(state.source && !sources.includes(state.source)) state.source = "";
+  const periods = [["hoy","Hoy"],["7","7 días"],["30","30 días"],["todo","Todo"]];
+
+  main.innerHTML = `
+    ${DEMO ? `<div class="banner"><b>Datos de ejemplo.</b> ${DATA_URL ? "Estás viendo el modo demostración (?demo)." : "Aún no está conectado a la hoja de Google: añade la URL /exec en <code>DATA_URL</code> (ver tools/google-sheets/README.md)."}</div>` : ""}
+    <div class="filters" role="group" aria-label="Filtros">
+      <div class="chips" role="group" aria-label="Periodo">${periods.map(([k,l])=>`<button class="chip" type="button" data-period="${k}" aria-pressed="${state.period===k}">${l}</button>`).join("")}</div>
+      <label class="fsel">Dispositivo <select id="fDev"><option value="">Todos</option>${["Móvil","Tablet","Escritorio"].map(d=>`<option ${state.device===d?"selected":""}>${d}</option>`).join("")}</select></label>
+      <label class="fsel">Origen <select id="fSrc"><option value="">Todos</option>${sources.map(s=>`<option ${state.source===s?"selected":""}>${esc(s)}</option>`).join("")}</select></label>
+      <span class="count-note">${nf.format(total)} de ${nf.format(ROWS.length)} tests</span>
+    </div>
+    <div class="grid">
+      <section class="card c3 hero"><div class="l">Tests completados</div><div class="v">${nf.format(total)}</div><div class="tile"><div class="d">${periodLabel()}</div></div></section>
+      <section class="card c3 tile"><div class="l">Hoy</div><div class="v">${nf.format(allHoy)}</div><div class="d">Todos los orígenes y dispositivos</div></section>
+      <section class="card c3 tile"><div class="l">Últimos 7 días</div><div class="v">${nf.format(all7)}</div><div class="d">Media de ${nf.format(Math.round(all7/7))} al día</div></section>
+      <section class="card c3 tile"><div class="l">Fragancia más frecuente</div><div class="v" style="font-size:19px">${top ? esc(top[0].replace(/^Flor (de )?/,"")) : "—"}</div><div class="d">${top ? `${pct(top[1],total)} % de los tests · ${pct(movil,total)} % desde móvil` : ""}</div></section>
+
+      <section class="card c5"><h2>Resultado del test</h2><p class="sub">Fragancia que ha recomendado el test</p>${barList(countBy(rows,r=>r.resultado), total, {img:true, label:k=>k.replace(/^Flor (de )?/,"")})}</section>
+      <section class="card c7"><h2>Tests por día</h2><p class="sub">Tests completados cada día</p><div class="chart" id="dayc">${dayChart(rows)}</div></section>
+
+      <section class="card c12"><h2>Respuestas por pregunta</h2><p class="sub">Qué opción ha elegido la gente en cada pregunta</p>
+        <div class="qgrid">${PREG.map((p,i)=>`<div class="q"><h3>P${i+1} <em>· ${p}</em></h3>${barList(countBy(rows,r=>r.resp[i]), total, {label:k=>k.replace(/^[ABC] · /,"")})}</div>`).join("")}</div></section>
+
+      <section class="card c4"><h2>Dispositivo</h2><p class="sub">Desde dónde se hace el test</p>${barList(countBy(rows,r=>r.dispositivo), total)}</section>
+      <section class="card c4"><h2>Origen</h2><p class="sub">utm_source o web de procedencia</p>${barList(countBy(rows,r=>r.origen).slice(0,8), total)}</section>
+      <section class="card c4"><h2>Campaña</h2><p class="sub">utm_campaign</p>${barList(countBy(rows,r=>r.campana||"Sin campaña").slice(0,8), total)}</section>
+
+      <section class="card c12"><h2>Participaciones</h2><p class="sub">Cada test completado, del más reciente al más antiguo</p>
+        <div class="tbar"><input id="fq" type="search" placeholder="Buscar por fragancia, origen, campaña, ID…" value="${esc(state.q)}" aria-label="Buscar en participaciones"></div>
+        <div id="tbl"></div></section>
+    </div>`;
+
+  main.querySelectorAll("[data-period]").forEach(b => b.onclick = () => { state.period = b.dataset.period; state.page = 0; render(); });
+  $("#fDev").onchange = e => { state.device = e.target.value; state.page = 0; render(); };
+  $("#fSrc").onchange = e => { state.source = e.target.value; state.page = 0; render(); };
+  $("#fq").oninput = e => { state.q = e.target.value; state.page = 0; renderTable(); };
+  renderTable();
+}
+function periodLabel(){ return ({hoy:"Hoy", "7":"Últimos 7 días", "30":"Últimos 30 días", todo:"Desde el inicio"})[state.period]; }
+
+const PAGE = 25;
+function tableRows(){
+  const q = state.q.trim().toLowerCase();
+  return filtered().sort((a,b)=>b.fecha-a.fecha).filter(r => !q || [r.resultado,r.origen,r.campana,r.dispositivo,r.id,...r.resp].join(" ").toLowerCase().includes(q));
+}
+function renderTable(){
+  const rows = tableRows(), pages = Math.max(1, Math.ceil(rows.length/PAGE));
+  state.page = Math.min(state.page, pages-1);
+  const slice = rows.slice(state.page*PAGE, state.page*PAGE+PAGE);
+  $("#tbl").innerHTML = rows.length ? `<div class="twrap"><table>
+    <thead><tr><th>Fecha</th><th>ID</th><th>Resultado</th>${PREG.map((p,i)=>`<th title="${p}">P${i+1}</th>`).join("")}<th>Dispositivo</th><th>Origen</th><th>Campaña</th></tr></thead>
+    <tbody>${slice.map(r=>`<tr><td>${fmtDT(r.fecha)}</td><td title="${esc(r.id)}">${esc(r.id.slice(0,8))}</td>
+      <td><span class="res">${IMG[r.resultado]?`<img src="assets/productos/${IMG[r.resultado]}.webp" alt="" loading="lazy">`:""}${esc(r.resultado.replace(/^Flor (de )?/,""))}</span></td>
+      ${r.resp.map(a=>`<td><span class="ans" title="${esc(a)}">${esc(a.slice(0,1))}</span></td>`).join("")}
+      <td>${esc(r.dispositivo)}</td><td>${esc(r.origen)}</td><td>${esc(r.campana||"—")}</td></tr>`).join("")}</tbody></table></div>
+    <div class="pager"><span>${nf.format(state.page*PAGE+1)}–${nf.format(state.page*PAGE+slice.length)} de ${nf.format(rows.length)}</span>
+      <button class="pbtn" id="pPrev" type="button" ${state.page?"":"disabled"}>Anterior</button><button class="pbtn" id="pNext" type="button" ${state.page<pages-1?"":"disabled"}>Siguiente</button></div>`
+    : '<p class="empty">No hay participaciones que coincidan.</p>';
+  const p = $("#pPrev"), n = $("#pNext");
+  if(p) p.onclick = () => { state.page--; renderTable(); };
+  if(n) n.onclick = () => { state.page++; renderTable(); };
+}
+
+/* Tooltip al pasar por cualquier barra (data-tip) */
+document.addEventListener("pointerover", e => { const t = e.target.closest("[data-tip]"); if(!t){ tip.style.opacity = 0; return; } tip.innerHTML = t.dataset.tip; tip.style.opacity = 1; });
+document.addEventListener("pointermove", e => { if(tip.style.opacity !== "1") return; const x = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8); tip.style.left = x + "px"; tip.style.top = (e.clientY - tip.offsetHeight - 12) + "px"; });
+document.addEventListener("pointerleave", () => tip.style.opacity = 0);
+let rz; addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { const c = $("#dayc"); if(c) c.innerHTML = dayChart(filtered()); }, 150); });
+
+/* CSV con todas las columnas de los tests filtrados (separador ; para Excel en español) */
+function downloadCsv(){
+  const head = ["Fecha","ID","Resultado",...PREG.map((p,i)=>`P${i+1} ${p}`),"Dispositivo","Idioma","Origen","utm_medium","utm_campaign"];
+  const q = v => `"${String(v??"").replace(/"/g,'""')}"`;
+  const lines = [head.map(q).join(";"), ...tableRows().map(r=>[fmtDT(r.fecha),r.id,r.resultado,...r.resp,r.dispositivo,r.idioma,r.origen,r.medio,r.campana].map(q).join(";"))];
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob(["﻿"+lines.join("\r\n")], {type:"text/csv;charset=utf-8"}));
+  a.download = `test-flor-${dayKey(new Date())}.csv`; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+}
+
+/* ---------- Acceso ---------- */
+function showLogin(msg=""){
+  ["btnRefresh","btnCsv","btnOut"].forEach(id => document.getElementById(id).hidden = true);
+  main.innerHTML = `<form class="login" id="login"><h2>Acceso al informe</h2><p>Introduce la clave del dashboard (la definida en el script de Google como <code>CLAVE_DASHBOARD</code>).</p>
+    <label class="sr" for="clave">Clave</label><input id="clave" type="password" autocomplete="current-password" placeholder="Clave" required>
+    <button type="submit">Entrar</button><div class="err" role="alert">${esc(msg)}</div></form>`;
+  $("#login").onsubmit = e => { e.preventDefault(); start($("#clave").value.trim()); };
+  $("#clave").focus();
+}
+async function start(clave){
+  const demo = !DATA_URL || new URLSearchParams(location.search).has("demo");
+  try{
+    if(demo){ ROWS = demoData(); DEMO = true; document.getElementById("upd").textContent = "Datos de ejemplo"; }
+    else{
+      if(!clave) return showLogin();
+      main.innerHTML = '<p class="loading">Cargando datos…</p>';
+      const d = await loadRemote(clave); ROWS = d.rows; DEMO = false; store.set(KEY_STORE, clave);
+      document.getElementById("upd").textContent = "Actualizado " + fmtDT(d.actualizado);
+    }
+    document.getElementById("btnRefresh").hidden = demo; document.getElementById("btnOut").hidden = demo;
+    document.getElementById("btnCsv").hidden = false;
+    render();
+  }catch(err){
+    store.del(KEY_STORE);
+    showLogin(err.message === "Clave incorrecta" ? "La clave no es correcta." : "No se han podido cargar los datos. Revisa la conexión o la URL del script.");
+  }
+}
+document.getElementById("btnRefresh").onclick = () => start(store.get(KEY_STORE));
+document.getElementById("btnCsv").onclick = downloadCsv;
+document.getElementById("btnOut").onclick = () => { store.del(KEY_STORE); showLogin(); };
+start(store.get(KEY_STORE));
+</script>
+</body>
+</html>

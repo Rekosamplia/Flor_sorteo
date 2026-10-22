@@ -2,6 +2,9 @@
  * Receptor de respuestas del test «Descubre tu fragancia Flor».
  * Se pega en la hoja de cálculo: Extensiones → Apps Script, y se publica como aplicación web
  * (ver README.md en esta carpeta). Cada test completado añade una fila en la pestaña «Respuestas».
+ *
+ * El dashboard (dashboard.html) lee los datos con { accion: "leer", clave: "…" }. La clave se guarda en
+ * Configuración del proyecto → Propiedades del script → CLAVE_DASHBOARD (nunca en el código).
  */
 
 const HOJA = 'Respuestas';
@@ -19,6 +22,7 @@ function doPost(e) {
   lock.waitLock(10000); // evita que dos envíos simultáneos se pisen
   try {
     const d = JSON.parse(e.postData.contents);
+    if (d.accion === 'leer') return leer_(d.clave);
     const hoja = obtenerHoja_();
     const puntos = d.puntos || {};
     hoja.appendRow([
@@ -38,6 +42,20 @@ function doPost(e) {
   } finally {
     lock.releaseLock();
   }
+}
+
+// Devuelve todas las filas para el dashboard, solo con la clave correcta.
+function leer_(clave) {
+  const buena = PropertiesService.getScriptProperties().getProperty('CLAVE_DASHBOARD');
+  if (!buena || String(clave || '') !== buena) return json_({ ok: false, error: 'Clave incorrecta' });
+  const valores = obtenerHoja_().getDataRange().getValues();
+  const columnas = valores.shift() || COLUMNAS;
+  const filas = valores.map(r => r.map(v => v instanceof Date ? v.toISOString() : v));
+  return json_({ ok: true, columnas, filas, actualizado: new Date().toISOString() });
+}
+
+function json_(o) {
+  return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);
 }
 
 // Al abrir la URL en el navegador: comprobación rápida de que está publicado.
