@@ -700,11 +700,13 @@ document.querySelectorAll("[data-legal]").forEach(b=>b.onclick=()=>{
   openModal(`<span class="eyebrow">${e}</span><h3>${t}</h3>${ps.map(p=>`<p>${p}</p>`).join("")}`);
 });
 
-/* Botón fijo «Descubre tu fragancia, haz el test»: lleva al test; desde el resultado, vuelve a empezar */
+/* Botón fijo «Descubre tu fragancia, haz el test»: igual que «Empezar el test» (sube al test y empieza por la pregunta 1).
+   A mitad del test lleva a la pregunta en curso sin perder respuestas; desde el resultado empieza un test nuevo. */
 document.getElementById("toTest").onclick = e => {
   e.preventDefault();
-  if(idx >= Q.length) return reset(); // desde el resultado: vuelve a empezar (y se centra)
-  centerTest();
+  if(idx > -1 && idx < Q.length) return centerTest();
+  if(idx >= Q.length){ answers = Array(Q.length).fill(null); document.documentElement.style.setProperty("--fr","#2F55C9"); }
+  idx = 0; render();
 };
 
 /* Bloque «Sube aquí tu ticket» */
