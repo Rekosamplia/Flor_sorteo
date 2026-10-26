@@ -99,16 +99,18 @@ ART["estela"] = svg(
   '<circle cx="330" cy="70" r="40" fill="#fff" opacity=".25" filter="url(#b8)"/>')
 
 # P3 · ingredientes
-def lavender(x, y, L, ang, op):
-  buds = "".join(f'<ellipse cx="{(-5 if i%2 else 5)}" cy="{-L*.45 - i*7}" rx="5" ry="8" fill="#fff" transform="rotate({(-25 if i%2 else 25)} {(-5 if i%2 else 5)} {-L*.45 - i*7})"/>'
-                 for i in range(int(L*.55/7)))
-  return (f'<g transform="translate({x} {y}) rotate({ang})" opacity="{op}" filter="url(#b1)">'
-          f'<path d="M0 0 L0 {-L}" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".8"/>{buds}</g>')
+def bud(cx, cy, r, op):
+  return (f'<g opacity="{op}" filter="url(#b1)"><ellipse cx="{cx}" cy="{cy}" rx="{r*.75}" ry="{r}" fill="#fff"/>'
+          f'<path d="M{cx} {cy+r} q 2 {r*.8} -4 {r*1.6}" stroke="#CFE8C8" stroke-width="2" fill="none"/></g>')
 
-ART["lavanda"] = svg(
-  lavender(240, 300, 250, -8, .7) + lavender(275, 300, 220, 6, .6) + lavender(205, 300, 190, -20, .55) +
-  lavender(320, 300, 170, 18, .35) + lavender(90, 300, 150, -12, .3) +
-  '<circle cx="120" cy="90" r="50" fill="#fff" opacity=".25" filter="url(#b8)"/>')
+# Flor de azahar (naranjo): flores blancas de 5 pétalos con el centro amarillo, capullos y hojas
+ART["azahar"] = svg(
+  leaf(250, 150, 90, 30, 128, "#D5EBCB", .55) + leaf(150, 205, 70, 24, -120, "#D5EBCB", .5) + leaf(320, 238, 56, 20, 150, "#D5EBCB", .45) +
+  flower(245, 140, 60, 5, "#fff", .8, center="#F6C343", rot=10) + flower(140, 205, 40, 5, "#fff", .72, center="#F6C343", rot=-24) +
+  flower(328, 232, 32, 5, "#fff", .7, center="#F6C343", rot=30) +
+  bud(188, 92, 11, .7) + bud(318, 84, 9, .6) + bud(92, 128, 8, .55) +
+  "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="#FFF3C9" opacity=".7" filter="url(#b1)"/>' for x, y, r in [(70, 250, 4), (370, 150, 3.5), (210, 270, 3)]) +
+  '<circle cx="245" cy="140" r="95" fill="#fff" opacity=".18" filter="url(#b8)"/>')
 
 def rose(cx, cy, r, op):
   """Rosa vista desde arriba: tres coronas de pétalos cada vez más pequeñas y claras."""
