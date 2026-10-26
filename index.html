@@ -337,7 +337,7 @@ dialog.wide{max-width:min(860px,calc(100vw - 32px))}
     <span class="eyebrow">Sorteo Smartbox SPA</span>
     <h2 class="start-title" id="ticket-t">¿Ya tienes tu producto <span class="nw"><svg class="flor" viewBox="158 157 2519 1683" role="img" aria-label="Flor"><use href="#flor-logo"/></svg>?</span><br>Participa en el <em class="gilroy" style="color:var(--accent)">sorteo</em><sup>*</sup></h2>
     <p class="lead">Compra el producto <svg class="flor" viewBox="158 157 2519 1683" role="img" aria-label="Flor"><use href="#flor-logo"/></svg> que prefieras, siempre que sea un producto <a class="legal-link" href="#bases-productos" data-anchor="bases-productos">incluido en las bases legales de esta promoción</a>, y sube tu ticket para entrar en el sorteo de <b>10 Smartbox SPA</b> <mark class="hl">valoradas en 79,90€</mark>.</p>
-    <a class="btn btn-primary btn-accent" id="ticketBtn" href="https://participa.samplia.com/cualestuflor" target="_blank" rel="noopener">Participar en el sorteo</a>
+    <a class="btn btn-primary btn-accent" id="ticketBtn" href="https://participa.samplia.com/cualestuflor" target="_self">Participar en el sorteo</a>
     <p class="meta disclaimer">*Puedes participar en el sorteo sin necesidad de hacer previamente el test.</p>
   </div></div>
 </section>
@@ -371,7 +371,7 @@ dialog.wide{max-width:min(860px,calc(100vw - 32px))}
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>
     <span>Descubre tu fragancia, haz el test</span>
   </a>
-  <a class="btn btn-cta" id="toTicket" href="https://participa.samplia.com/cualestuflor" target="_blank" rel="noopener">
+  <a class="btn btn-cta" id="toTicket" href="https://participa.samplia.com/cualestuflor" target="_self">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
     <span>Sube aquí tu ticket y participa en el sorteo</span>
   </a>
@@ -474,16 +474,25 @@ function progress(){
   return h+'<span class="finish">Tu fragancia</span></nav>';
 }
 
+/* Centra la tarjeta del test en la zona visible (descontando la barra fija de abajo).
+   Si es más alta que la pantalla, la deja arriba con un pequeño margen. */
+function centerTest(){
+  if(!app.firstElementChild) return;
+  const r = app.getBoundingClientRect(); // el contenedor: no le afecta la animación de entrada de la tarjeta
+  const bar = document.getElementById("stickyCta").getBoundingClientRect();
+  const visible = Math.min(innerHeight, bar.top);          // altura útil por encima de los botones fijos
+  const offset = Math.max(12, (visible - r.height) / 2);
+  const top = Math.max(0, r.top + window.scrollY - offset);
+  if(Math.abs(window.scrollY - top) > 4) window.scrollTo({top, behavior:"smooth"});
+}
+
 function render(){
-  if(!first){
-    const top = testEl.getBoundingClientRect().top + window.scrollY;
-    if(Math.abs(window.scrollY-top)>4) window.scrollTo({top,behavior:"smooth"});
-  }
-  first = false;
   document.getElementById("duo").classList.toggle("is-start", idx===-1); // dos columnas solo en el inicio
-  if(idx===-1) return renderStart();
-  if(idx<Q.length) return renderQ();
-  return renderResult();
+  const wasFirst = first; first = false;
+  if(idx===-1) renderStart();
+  else if(idx<Q.length) renderQ();
+  else renderResult();
+  if(!wasFirst) centerTest();
 }
 
 function renderStart(){
@@ -546,7 +555,7 @@ function renderResult(){
           <div>
             <h3>Gana una de las 10 Smartbox SPA</h3>
             <p>Compra un suavizante o perfumador ${LOGO} y participa en el sorteo de 10 Smartbox SPA <mark class="hl">valoradas en 79,90€</mark>.</p>
-            <a class="btn" href="${TICKET_URL}" target="_blank" rel="noopener">Participar en el sorteo</a>
+            <a class="btn" href="${TICKET_URL}" target="_self">Participar en el sorteo</a>
           </div>
         </div>
         <div class="after">
@@ -694,8 +703,8 @@ document.querySelectorAll("[data-legal]").forEach(b=>b.onclick=()=>{
 /* Botón fijo «Descubre tu fragancia, haz el test»: lleva al test; desde el resultado, vuelve a empezar */
 document.getElementById("toTest").onclick = e => {
   e.preventDefault();
-  if(idx >= Q.length) return reset();
-  window.scrollTo({top: testEl.getBoundingClientRect().top + window.scrollY, behavior:"smooth"});
+  if(idx >= Q.length) return reset(); // desde el resultado: vuelve a empezar (y se centra)
+  centerTest();
 };
 
 /* Bloque «Sube aquí tu ticket» */
