@@ -203,10 +203,12 @@ footer{background:var(--footer);color:rgba(255,255,255,.72);padding:56px 20px ca
 .f-copy{font-size:12px;color:rgba(255,255,255,.45)}
 
 /* Modal */
-dialog{border:0;border-radius:6px;padding:0;max-width:min(640px,calc(100vw - 32px));width:100%;color:var(--ink);background:var(--paper);box-shadow:0 40px 80px -30px rgba(10,14,40,.5)}
+dialog{border:0;border-radius:10px;padding:56px 14px 26px 34px;max-width:min(640px,calc(100vw - 32px));width:100%;color:var(--ink);background:var(--paper);box-shadow:0 40px 80px -30px rgba(10,14,40,.5)}
 dialog::backdrop{background:rgba(20,24,56,.55);backdrop-filter:blur(3px)}
 dialog.wide{max-width:min(860px,calc(100vw - 32px))}
-.m-in{position:relative;padding:30px 30px 26px;max-height:80vh;overflow:auto}
+/* el texto se desplaza dentro de un área con margen respecto al borde de la ventana y se desvanece arriba y abajo */
+.m-in{position:relative;padding:14px 20px 18px 0;max-height:calc(82vh - 82px);overflow:auto;overscroll-behavior:contain;
+  -webkit-mask-image:linear-gradient(transparent 0,#000 18px,#000 calc(100% - 22px),transparent 100%);mask-image:linear-gradient(transparent 0,#000 18px,#000 calc(100% - 22px),transparent 100%)}
 .m-in h4{font-size:15px;font-weight:600;margin:0 0 10px;color:var(--ink)}
 .m-in ul,.m-in ol{color:var(--ink-2);font-size:14px;margin:0 0 12px;padding-left:20px}
 .m-in li{margin-bottom:4px}
@@ -222,9 +224,24 @@ dialog.wide{max-width:min(860px,calc(100vw - 32px))}
 .ptable td{padding:8px;border-bottom:1px solid var(--line);vertical-align:middle}
 .ptable td img{height:44px;width:auto}
 .ptable td:first-child{width:52px}
+.bases-doc h4{margin:24px 0 8px;scroll-margin-top:12px}
+.bases-doc h5{font-size:14px;font-weight:600;margin:16px 0 6px;color:var(--ink)}
+.bases-doc p,.bases-doc li{font-size:14px;line-height:1.6}
+.bases-doc ol{padding-left:22px}
+.bases-doc .flash{background:var(--accent-soft);box-shadow:0 0 0 8px var(--accent-soft);border-radius:2px;transition:background .4s}
+.privtable.anexo{font-size:12.5px}
+.privtable.anexo td:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+.privtable.anexo thead th{position:sticky;top:-26px}
+.priv h3{margin-bottom:6px}
+.priv h4{margin:22px 0 8px}
+.priv p,.priv li{font-size:14px;line-height:1.6}
+.privtable-wrap{overflow-x:auto;margin:6px 0 14px}
+.privtable{width:100%;border-collapse:collapse;font-size:13.5px;color:var(--ink-2)}
+.privtable th{text-align:left;font-weight:600;color:var(--ink);background:var(--bg);padding:9px 10px;border:1px solid var(--line)}
+.privtable td{padding:9px 10px;border:1px solid var(--line);vertical-align:top}
 .m-in h3{font-size:24px;line-height:1.15;margin:6px 0 16px}
 .m-in p{color:var(--ink-2);font-size:14.5px;margin:0 0 12px}
-.m-close{position:absolute;z-index:2;top:10px;right:10px;width:36px;height:36px;border-radius:50%;border:0;padding:0;display:grid;place-items:center;background:var(--bg);color:var(--ink);cursor:pointer;transition:background .2s}
+.m-close{position:absolute;z-index:2;top:12px;right:12px;width:36px;height:36px;border-radius:50%;border:0;padding:0;display:grid;place-items:center;background:var(--bg);color:var(--ink);cursor:pointer;transition:background .2s}
 .m-close:hover{background:var(--accent-soft)}
 .m-close svg{display:block}
 
@@ -289,7 +306,8 @@ dialog.wide{max-width:min(860px,calc(100vw - 32px))}
   .sticky-cta{gap:8px;padding-inline:12px}
   .sticky-cta{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
   .toc ol{columns:1}
-  .m-in{padding:26px 20px 22px}
+  dialog{padding:54px 8px 20px 22px}
+  .m-in{padding:12px 14px 16px 0}
   .finish{display:none}
 }
 @media (max-width:480px){
@@ -358,7 +376,6 @@ dialog.wide{max-width:min(860px,calc(100vw - 32px))}
     <img class="f-logo" src="assets/logo/flor-logo-blanco.svg" width="84" height="56" alt="Flor">
     <nav class="f-links" aria-label="Información legal">
       <button class="fbtn" type="button" data-legal="legal">Textos legales</button>
-      <button class="fbtn" type="button" data-legal="cookies">Política de cookies</button>
       <button class="fbtn" type="button" data-legal="privacidad">Política de privacidad</button>
     </nav>
     <p class="f-copy">© 2026 <svg class="flor" viewBox="158 157 2519 1683" role="img" aria-label="Flor"><use href="#flor-logo"/></svg>. Promoción válida en España. Consulta las bases legales del sorteo.</p>
@@ -611,70 +628,166 @@ modal.querySelector(".m-close").onclick=()=>modal.close();
 modal.addEventListener("click",e=>{ if(e.target===modal) modal.close(); });
 
 const PRODS = ["cerezo","orquidea","original","azul","medit","nenuco","delicias","pieles"];
-const BASES = `<span class="ex">Ejemplo · pendiente de validación legal</span>
-  <span class="eyebrow" style="display:block">Textos legales</span>
-  <h3 id="bases">Bases legales de la promoción «Descubre tu fragancia ${LOGO}»</h3>
-  <nav class="toc" aria-label="Índice de las bases"><span class="eyebrow">Índice</span><ol>
-    <li><a href="#bases-organizador" data-anchor="bases-organizador">Empresa organizadora</a></li>
-    <li><a href="#bases-ambito" data-anchor="bases-ambito">Ámbito y duración</a></li>
-    <li><a href="#bases-requisitos" data-anchor="bases-requisitos">Requisitos para participar</a></li>
-    <li><a href="#bases-productos" data-anchor="bases-productos">Productos que participan</a></li>
-    <li><a href="#bases-mecanica" data-anchor="bases-mecanica">Mecánica de participación</a></li>
-    <li><a href="#bases-premio" data-anchor="bases-premio">Premio</a></li>
-    <li><a href="#bases-sorteo" data-anchor="bases-sorteo">Sorteo y comunicación</a></li>
-    <li><a href="#bases-datos" data-anchor="bases-datos">Protección de datos</a></li>
-    <li><a href="#bases-aceptacion" data-anchor="bases-aceptacion">Aceptación de las bases</a></li>
-  </ol></nav>
+/* Bases legales definitivas (BASES_LEGALES_SORTEO_CUAL_ES_TU_FLOR_v3.docx). Texto copiado literalmente del documento:
+   no editar a mano. Solo se añaden el índice y los enlaces internos (ANEXO I, apartado 4). */
+const BASES = `<div class="bases-doc">
+<h3 id="bases">BASES LEGALES DEL SORTEO “¿CUÁL ES TU FLOR?”</h3>
+<nav class="toc" aria-label="Índice de las bases"><span class="eyebrow">Índice</span><ol><li><a href="#bases-1" data-anchor="bases-1">1. PERÍODO PROMOCIONAL</a></li><li><a href="#bases-2" data-anchor="bases-2">2. ÁMBITO TERRITORIAL Y EDAD MÍNIMA</a></li><li><a href="#bases-3" data-anchor="bases-3">3. ESTABLECIMIENTOS ADHERIDOS</a></li><li><a href="#bases-4" data-anchor="bases-4">4. PRODUCTOS PROMOCIONALES</a></li><li><a href="#bases-5" data-anchor="bases-5">5. PREMIO</a></li><li><a href="#bases-6" data-anchor="bases-6">6. MECÁNICA DE LA PROMOCIÓN</a></li><li><a href="#bases-7" data-anchor="bases-7">7. SORTEO, COMUNICACIÓN CON LA PERSONA GANADORA Y ENTREGA DEL PREMIO</a></li><li><a href="#bases-8" data-anchor="bases-8">8. OTRAS CONSIDERACIONES APLICABLES A LA PROMOCIÓN</a></li><li><a href="#bases-9" data-anchor="bases-9">9. OTROS</a></li><li><a href="#bases-productos" data-anchor="bases-productos">ANEXO I</a></li></ol></nav>
+<p>VEH Hibiscus Spain, S.L.U. (en adelante, “Vestacy”), con CIF B48001770 y domicilio social en Paseo de Gracia número 9, 08007 Barcelona, inscrita en el Registro Mercantil de Barcelona, como entidad organizadora y titular de la marca FLOR, organiza la promoción digital denominada “¿Cuál es tu FLOR?”, que se regirá por las presentes Bases Legales.</p>
+<h4 id="bases-1">1. PERÍODO PROMOCIONAL</h4>
+<p>El período de participación en la promoción comenzará el 28 de octubre de 2026 y finalizará el 31 de diciembre de 2026, ambos inclusive. No se admitirán participaciones realizadas fuera de dicho período.</p>
+<h4 id="bases-2">2. ÁMBITO TERRITORIAL Y EDAD MÍNIMA</h4>
+<p>La promoción será válida en todo el territorio español. Podrán participar las personas físicas mayores de dieciocho (18) años y residentes en España que cumplan los requisitos establecidos en estas Bases Legales.</p>
+<h4 id="bases-3">3. ESTABLECIMIENTOS ADHERIDOS</h4>
+<p>Los productos participantes podrán adquirirse en establecimientos físicos u online ubicados en España que comercialicen los productos FLOR incluidos en la promoción.</p>
+<h4 id="bases-4">4. PRODUCTOS PROMOCIONALES</h4>
+<p>La promoción será válida para los productos de la marca FLOR indicados en el <a class="legal-link" href="#bases-productos" data-anchor="bases-productos">ANEXO I</a> de estas bases legales. </p>
+<h4 id="bases-5">5. PREMIO</h4>
+<p>El sorteo contará con un total de diez (10) personas ganadoras, cada una de las cuales recibirá una (1) Smartbox SPA, con un valor de referencia de setenta y nueve euros con noventa céntimos (79,90 €) por premio. Si, en el momento de adquirir los premios, la Smartbox prevista inicialmente ya no estuviera disponible, la Organización podrá sustituirla por otra Smartbox o experiencia de bienestar de características y valor similares, procurando que sea equivalente a la opción inicialmente prevista. La sustitución no dará derecho a compensación adicional.</p>
+<p>El premio no podrá canjearse por dinero en efectivo ni por otro premio distinto del indicado, salvo que la Organización determine lo contrario por causas justificadas. El premio es personal e intransferible y estará sujeto, en su caso, a las condiciones de uso, disponibilidad, reserva, vigencia y demás términos establecidos por Smartbox o por el proveedor correspondiente.</p>
+<p>Vestacy quedará eximida de toda obligación o compensación frente a los participantes si, por causa de fuerza mayor, imperativo legal o cualquier otra causa no imputable a Vestacy, la promoción debiera suspenderse o anularse total o parcialmente. En tal caso, dicha circunstancia será comunicada debidamente a los participantes.</p>
+<h4 id="bases-6">6. MECÁNICA DE LA PROMOCIÓN</h4>
+<p>Para participar en la promoción, los usuarios deberán realizar las siguientes acciones durante el período promocional:</p>
+<ol>
+<li>Acceder a la página web https://cualestuflor.es.</li>
+<li>Adquirir al menos un (1) producto de la marca FLOR incluido en el <a class="legal-link" href="#bases-4" data-anchor="bases-4">apartado 4</a> de estas Bases Legales, en un establecimiento físico u online situado en España.</li>
+<li>Cumplimentar el formulario de participación habilitado en la web, indicando nombre completo, correo electrónico, producto FLOR adquirido, establecimiento de compra y comunidad autónoma, y adjuntando una imagen del ticket o justificante de compra.</li>
+<li>Aceptar las presentes Bases Legales y la Política de Privacidad mediante las casillas habilitadas en el formulario y pulsar el botón de participación.</li>
+<li>De forma complementaria y voluntaria, los usuarios podrán completar el test de fragancias disponible en la web para recibir una recomendación personalizada de la fragancia FLOR que mejor encaje con sus preferencias. La realización del test no es obligatoria ni constituye un requisito para participar en el sorteo, y no afecta a la validez de la participación.</li>
+</ol>
+<p>El ticket de compra deberá corresponder a una compra realizada durante el período promocional y ser anterior a la fecha y hora de registro de la participación. La imagen aportada deberá mostrar el documento completo, ser perfectamente legible y permitir verificar la fecha de compra, el establecimiento vendedor, el producto adquirido y el importe abonado.</p>
+<p>En el caso de compras realizadas a través de establecimientos online o plataformas de comercio electrónico, serán válidas la factura, el justificante de compra o cualquier otro documento equivalente emitido por el vendedor, siempre que permita verificar de forma inequívoca la compra realizada, el establecimiento vendedor, la fecha, el producto adquirido y el importe abonado. No serán válidas simples capturas de pantalla del carrito de compra, del proceso de pago o de pedidos en curso que no acrediten suficientemente la compra efectuada.</p>
+<p>Los participantes deberán conservar el ticket o justificante original hasta la finalización de la promoción y durante el tiempo necesario para atender posibles comprobaciones o reclamaciones. La Organización podrá solicitar documentación adicional cuando resulte necesario para comprobar la autenticidad de la compra o el cumplimiento de estas Bases Legales.</p>
+<p>No existe límite de participaciones por participante, siempre que cada participación corresponda a un ticket o justificante de compra diferente. Cada ticket de compra únicamente podrá utilizarse para registrar una (1) participación. No se admitirán participaciones duplicadas con el mismo ticket, ni documentos manipulados, ilegibles, incompletos o correspondientes a compras anuladas o devueltas.</p>
+<p>Vestacy se reserva el derecho de excluir las participaciones que presenten indicios de fraude, manipulación o cualquier actuación destinada a alterar el correcto desarrollo de la promoción. Si la participación seleccionada resultara inválida por incumplir estas Bases Legales, el premio se adjudicará al siguiente participante suplente, siguiendo el orden establecido en el sorteo.</p>
+<h4 id="bases-7">7. SORTEO, COMUNICACIÓN CON LA PERSONA GANADORA Y ENTREGA DEL PREMIO</h4>
+<p>Una vez finalizado el período promocional, el sorteo se celebrará el 11 de enero de 2027 mediante la plataforma AppSorteos, entre todas las participaciones válidas registradas durante el período promocional. Se seleccionarán diez (10) personas ganadoras y hasta cinco (5) participantes suplentes, que se utilizarán por orden en caso de que alguna persona ganadora no acepte el premio en plazo o no cumpla los requisitos de participación. Se entregará un (1) premio como máximo por ganador.</p>
+<p>Samplia dispondrá de un plazo máximo de setenta y dos (72) horas desde la celebración del sorteo para ponerse en contacto con las personas ganadoras a través del correo electrónico facilitado en el formulario de participación, comunicarles el resultado y solicitar la confirmación expresa de la aceptación del premio.</p>
+<p>Cada persona ganadora dispondrá de un plazo de setenta y dos (72) horas desde el envío de la comunicación por correo electrónico para confirmar la aceptación del premio.</p>
+<p>Desde la fecha en que cada persona ganadora confirme la aceptación del premio, Samplia dispondrá de un plazo máximo de treinta (30) días hábiles para hacerle llegar la e-box correspondiente.</p>
+<p>La persona participante deberá proporcionar datos de contacto veraces, actualizados y funcionales. La Organización no será responsable de la imposibilidad de entregar el premio derivada de datos de contacto incorrectos o desactualizados facilitados por la persona ganadora, ni de las condiciones de uso o disponibilidad de la Smartbox que correspondan a su emisor o proveedor.</p>
+<h4 id="bases-8">8. OTRAS CONSIDERACIONES APLICABLES A LA PROMOCIÓN</h4>
+<h5>Datos personales</h5>
+<p>En cumplimiento del Reglamento (UE) 2016/679, General de Protección de Datos (“RGPD”), y de la Ley Orgánica 3/2018, de Protección de Datos Personales y garantía de los derechos digitales, se informa de que VEH Hibiscus Spain, S.L.U. (Vestacy) será la responsable del tratamiento de los datos personales facilitados con motivo de la promoción. SAMPLIA MEDIA, S.L. (en adelante, “Samplia”) gestionará operativamente la promoción por cuenta de Vestacy y actuará como encargada del tratamiento, de conformidad con el correspondiente contrato.</p>
+<p>Los datos tratados serán los facilitados en el formulario de participación: nombre completo, correo electrónico, producto FLOR adquirido, establecimiento de compra, comunidad autónoma y ticket o justificante de compra. Los datos se tratarán con la finalidad de gestionar las participaciones, verificar el cumplimiento de estas Bases Legales, realizar el sorteo, contactar con la persona ganadora y gestionar la entrega del premio. La base jurídica será la ejecución de las Bases Legales y, cuando corresponda, el interés legítimo en prevenir participaciones fraudulentas.</p>
+<p>Los datos se conservarán durante el tiempo necesario para gestionar la promoción y entregar el premio y, posteriormente, durante los plazos legalmente exigibles o necesarios para atender posibles responsabilidades. Las personas participantes podrán ejercer sus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad dirigiéndose a VEH Hibiscus Spain, S.L.U., Paseo de Gracia número 9, 08007 Barcelona, o mediante correo electrónico a dpo@samplia.com. Asimismo, podrán presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es). La información detallada sobre el tratamiento estará disponible en la Política de Privacidad de la web de participación.</p>
+<h5>Derechos de imagen</h5>
+<p>La participación en el sorteo no implica por sí misma la cesión de derechos de imagen. Cualquier utilización del nombre, imagen u otros datos de la persona ganadora con fines publicitarios o promocionales distintos de la comunicación del resultado requerirá, cuando proceda, una autorización específica.</p>
+<h5>Fiscalidad</h5>
+<p>El premio estará sujeto a la normativa fiscal española que resulte aplicable. En caso de que, por su valor y conforme a la legislación vigente, proceda practicar retención o ingreso a cuenta, Vestacy realizará las actuaciones que legalmente correspondan. La persona ganadora deberá facilitar la información estrictamente necesaria para cumplir las obligaciones fiscales aplicables.</p>
+<h5>Exclusiones y participaciones fraudulentas</h5>
+<p>Quedan excluidos de la participación los empleados de Vestacy, de Samplia y de las empresas que intervengan directamente en la organización y gestión de la promoción, así como sus familiares hasta el segundo grado de parentesco. Vestacy se reserva el derecho de excluir justificadamente cualquier participación que defraude, altere o perjudique el normal desarrollo de la promoción.</p>
+<h5>Aceptación de las Bases</h5>
+<p>La participación en la promoción implica la aceptación íntegra de las presentes Bases Legales. Estas Bases se regirán por la legislación española. Cualquier controversia que pudiera derivarse de su interpretación, ejecución o cumplimiento será sometida a los Juzgados y Tribunales competentes conforme a la normativa aplicable.</p>
+<h4 id="bases-9">9. OTROS</h4>
+<p>Vestacy se reserva el derecho a modificar o añadir anexos a las presentes Bases Legales en relación con la mecánica y el premio, siempre que las modificaciones estén justificadas, no perjudiquen a los participantes y se comuniquen debidamente. Vestacy y Samplia no serán responsables de la imposibilidad de registrar una participación por errores en los datos facilitados por el participante ni de incidencias técnicas o de funcionamiento ajenas a su control que impidan la participación o la comunicación del premio.</p>
+<h4 id="bases-productos">ANEXO I</h4>
+<p>Productos participantes en la promoción:</p>
+<div class="privtable-wrap"><table class="privtable anexo"><thead><tr><th><b>SKU DESCRIPTION</b></th><th><b>EAN CODE</b></th></tr></thead><tbody><tr><td>FLOR INSTANT AZUL 345ML (8</td><td>8410104102784</td></tr><tr><td>FLOR INSTANT AZUL 237ML (8</td><td>8410104915704</td></tr><tr><td>FLOR INSTANT AZUL 4X237 CAJA AMZ(1</td><td>8410104922375</td></tr><tr><td>FLOR PROFESIONAL AZUL 10KG CS</td><td>8410104013042</td></tr><tr><td>FLOR PROF. AZUL 10KG ESP (1</td><td>8410104013042</td></tr><tr><td>FLOR PROF. NENUCO 10L (1</td><td>8410104914370</td></tr><tr><td>FLOR PROF. REG. AZUL 10L (1</td><td>8410104914387</td></tr><tr><td>FLOR SUAV.PROF.REG.NENUC(1</td><td>8410104914400</td></tr><tr><td>FLOR SUAV.PROF.REG.AZUL(1</td><td>8410104914417</td></tr><tr><td>FLOR PROF. AZUL 10KG MP(27</td><td>8410104013042</td></tr><tr><td>FLOR PROF. REG. AZUL 5L 125D (3</td><td>8410104914332</td></tr><tr><td>FLOR REG. PROF. 125 LAV AZUL (3</td><td>8410104914332</td></tr><tr><td>FLOR REG AZUL 2L 50D (5</td><td>8410104914356</td></tr><tr><td>FLOR REG. 50 LAV. AZUL (5</td><td>8410104914356</td></tr><tr><td>FLOR REG NENUCO 2L 50D (5</td><td>8410104914363</td></tr><tr><td>FLOR REG. 50 LAV. NENUCO (5</td><td>8410104914363</td></tr><tr><td>FLOR AZUL C. 10X1,06L 53D-AM(1</td><td>8410104894641</td></tr><tr><td>FLOR AZUL C. 1,386L 59D+30% (8</td><td>8410104910075</td></tr><tr><td>FLOR AZUL C. 1,26L 45D+50% (8</td><td>8410104888022</td></tr><tr><td>FLOR AZUL C. 1,512L 64D+30% (8</td><td>8410104894320</td></tr><tr><td>FLOR AZUL 3,654L 156D+30%(4</td><td>8410104910129</td></tr><tr><td>FLOR NENUCO C.1,26L 45D+50%(8</td><td>8410104910136</td></tr><tr><td>FLOR TW MELOC 1,512L 64D+30%(8</td><td>8410104910143</td></tr><tr><td>FLOR TW FR.ROJOS 1,512L 64D+30%(8</td><td>8410104910181</td></tr><tr><td>FLOR NENUCO 3,654L 156D+30%(4</td><td>8410104910198</td></tr><tr><td>FLOR CONC.ORIGINAL AZUL 156L(6</td><td>8447713003621</td></tr><tr><td>FLOR CONC. 87+13 LAV. AZUL (8</td><td>8447713003669</td></tr><tr><td>FLOR CON.193 LAV.AZUL (8</td><td>8447713003676</td></tr><tr><td>FLOR CONC. 87 LAV. AZUL (10</td><td>8447713003683</td></tr><tr><td>FLOR CONC. 87 LAV. AZUL (8</td><td>8447713003690</td></tr><tr><td>FLOR CONC.66 LAV. AZUL (4</td><td>8447713003713</td></tr><tr><td>FLOR CONC. 193 LAV. NENUCO (8</td><td>8447713003751</td></tr><tr><td>FLOR CONC. 87+13 LAV. NNC (8</td><td>8447713003768</td></tr><tr><td>FLOR CONC. 87 LAV. NENUCO (10</td><td>8447713003775</td></tr><tr><td>FLOR CONC. 66 LAV. NENUCO (4</td><td>8447713003782</td></tr><tr><td>FLOR CONC. 87+13 LAV. AZUL (8</td><td>8447713003799</td></tr><tr><td>FLOR CON.193 LAV.AZUL (4</td><td>8447713003805</td></tr><tr><td>FLOR CONC. 87 LAV. AZUL (180</td><td>8447713003812</td></tr><tr><td>FLOR CONC. 87 LAV. AZUL (8</td><td>8447713003829</td></tr><tr><td>FLOR CONC.66 LAV. AZUL (10</td><td>8447713003836</td></tr><tr><td>FLOR CONC.87 LAV.DE VERANO (8</td><td>8447713003904</td></tr><tr><td>FLOR CONC.87 LAV. DELICADO (8</td><td>8447713003898</td></tr><tr><td>FLOR CONC.66 LAV. D.VERANO (10</td><td>8447713003881</td></tr><tr><td>FLOR CONC 87 LAV ORQUIDEA(8</td><td>8447713003874</td></tr><tr><td>FLOR CONC.87L CEREZOFRAMBUE(8</td><td>8447713003928</td></tr><tr><td>FLOR CONC. 87 LAV  NENUCO(8</td><td>8447713003942</td></tr><tr><td>FLOR CONC. 87L MEDITERRANEO (8</td><td>8447713003959</td></tr><tr><td>FLOR CONC. 193 LAV. NENUCO (4</td><td>8447713003973</td></tr><tr><td>FLOR CONC. 87 LAV. D. DE VERANO (8</td><td>8447713003904</td></tr><tr><td>FLOR CONC70 LAV P.SENSIBLES(10</td><td>8447713005397</td></tr><tr><td>FLOR CONC. 66+9 LAV. AZUL(10</td><td>8447713005403</td></tr><tr><td>FLOR CONC 5L(3</td><td>8447713005410</td></tr><tr><td>FLOR CONC. 70 LAV ORIGINAL(10</td><td>8447713003645</td></tr><tr><td>FLOR TWIST FR ROJOS 1.2L 60D(8</td><td>8410104898595</td></tr><tr><td>FLOR TWIST MELOCOTO L1.2 60D(8</td><td>8410104898601</td></tr><tr><td>FLOR BOOSTER ACTIVE 300ML (6</td><td>8410104898694</td></tr><tr><td>FLOR AZUL C. 3,096L 156+16D (4</td><td>8410104103811</td></tr><tr><td>FLOR MEDITERRA C. 1,404L 78D(8</td><td>8410104103552</td></tr><tr><td>FLOR TW MELOC 1,404L 78D (8</td><td>8410104910037</td></tr><tr><td>FLOR TW FR ROJOS 1,404L 78D (8</td><td>8410104910044</td></tr><tr><td>FLOR TW FR ROJOS 1,062L 59D(10</td><td>8410104898588</td></tr><tr><td>FLOR AZUL C. 1,404L 78D (8</td><td>8410104103521</td></tr><tr><td>FLOR AZUL 1,404L 78D MP 180</td><td>8410104103521</td></tr><tr><td>FLOR AZUL C. MP 1,404L 78D (180</td><td>8410104103521</td></tr><tr><td>FLOR AZUL C. 1,062L 59D (10</td><td>8410104102258</td></tr><tr><td>FLOR AZUL 1.06L X10 59D-AM(1</td><td>8410104894641</td></tr><tr><td>FLOR MEDIT C. 1,062L 59D (10</td><td>8410104132255</td></tr><tr><td>FLOR NNC C. 1,062L 59D (10</td><td>8410104145354</td></tr><tr><td>FLOR NNC C. 1,404L 78D (8</td><td>8410104103538</td></tr><tr><td>FLOR DELIC C. 1,404L 78D (8</td><td>8410104910082</td></tr><tr><td>FLOR NENUCO 3,096L 156+16D(4</td><td>8410104103439</td></tr><tr><td>FLOR AZUL 3,096L 156+16D MP(72</td><td>8410104103811</td></tr><tr><td>FLOR TWIST MELOC.1.062L 59D(10</td><td>8410104910273</td></tr><tr><td>FLOR AZUL 1,602L 59D+50%(8</td><td>8410104910549</td></tr><tr><td>FLOR AZUL 1,602L 78+11D(8</td><td>8410104910594</td></tr><tr><td>FLOR NENUCO 8X1,602L 59D+50%(8</td><td>8410104910426</td></tr><tr><td>FLOR FR.ROJOS 1,602L 78+11D(8</td><td>8410104910464</td></tr><tr><td>FLOR NENUCO 3,87L 172D+25%(4</td><td>8410104910471</td></tr><tr><td>FLOR AZUL 3,87L 172D+25%(4</td><td>8410104910488</td></tr><tr><td>FLOR NENUCO 1,602L 78+11D(8</td><td>8410104910532</td></tr><tr><td>FLOR TW MELOC 8X1,602L 78+11D(8</td><td>8410104910440</td></tr><tr><td>FLOR 78DOS AZUL.NEN X176-MP(1</td><td>8410104914998</td></tr><tr><td>FLOR NENUCO 59D 1.06L X10-AM(1</td><td>8410104894634</td></tr><tr><td>FLOR AZUL 78+NNC 78 QP(1</td><td>8410104895792</td></tr><tr><td>FLOR NENUCO 78DX4 1.404-CS(10</td><td>8410104894368</td></tr><tr><td>FLOR AZUL 78D X4 1.404L-CS(10</td><td>8410104894375</td></tr><tr><td>FLOR MEDIT CAJA 10X59D-AM(1</td><td>8410104895730</td></tr><tr><td>FLOR TWIST FR.ROJ 172D 3.096(4</td><td>8410104910815</td></tr><tr><td>FLOR PERFUMADOR ROSA 720ML (12</td><td>8410104910884</td></tr><tr><td>FLOR PERF. ROSA 720ML 12U</td><td>8447713003720</td></tr><tr><td>FLOR PERFUMADOR AZUL 720ML (12</td><td>8410104910891</td></tr><tr><td>FLOR PERF. AZUL 720ML 12U</td><td>8447713003737</td></tr><tr><td>FLOR ORIGIN AZUL 89D 1.6L (8</td><td>8410104911362</td></tr><tr><td>FLOR ORIGIN AZUL 89D 1.6L-LI(8</td><td>8410104911362</td></tr><tr><td>FLOR ORIGIN.AZUL 63D 1.134L(10</td><td>8410104912970</td></tr><tr><td>FLOR ORIGINAL AZUL 139D 2.5L(6</td><td>8410104911423</td></tr><tr><td>FLOR TWIST COCO 78D (8</td><td>8410104913724</td></tr><tr><td>FLOR ELIXIR AZUL 63D 1.13L(10</td><td>8410104913748</td></tr><tr><td>FLOR ELIXIR HERBAL 63D 1.13(10</td><td>8410104913755</td></tr><tr><td>FLOR ELIXIR SENSO.63D 1.13L(10</td><td>8410104913762</td></tr><tr><td>FLOR PERFUMADOR AZUL(8</td><td>8410104910891</td></tr><tr><td>FLOR PERFUMADOR ROSA (8</td><td>8410104910884</td></tr><tr><td>FLOR PERF. LAVANDA 720ML(12</td><td>8410104916008</td></tr><tr><td>FLOR PERF. NENUCO 720ML(12</td><td>8410104916015</td></tr><tr><td>FLOR PERF.TRIP.AZ. PALET-CS(22</td><td>8410104914721</td></tr><tr><td>FLOR MIX PERF. 8AZ+4ROS-LI(1</td><td>8410104914738</td></tr><tr><td>FLOR C.MIX PERFUM. 8AZ+4ROS -L-1U</td><td>8410104914738</td></tr><tr><td>FLOR MIX CONC 6AZ+2NNC 78D (1</td><td>8410104914752</td></tr><tr><td>FLOR NENUCO 1,512L 64D +30%(8</td><td>8410104894337</td></tr><tr><td>FLOR PERF. AZUL TR.INTER CS(14</td><td>8410104914592</td></tr><tr><td>FLOR PERF. ROSA TRI.INTER-CS(8</td><td>8410104914608</td></tr><tr><td>FLOR PERF. PALET MIXT. CS(1</td><td>8410104914653</td></tr><tr><td>FLOR CONC.59D+25% TW.FR.ROJ(8</td><td>8410104915933</td></tr><tr><td>FLOR CONC.59D+25% NENUCO (8</td><td>8410104915940</td></tr><tr><td>FLOR CONC. 59D+25% AZUL (8</td><td>8410104915957</td></tr><tr><td>FLOR MIX NENUCO+AZUL 59D QP</td><td>8410104922719</td></tr><tr><td>FLOR JAZMIN 1,602L 78+11DX8</td><td>8410104923198</td></tr><tr><td>FLOR ORQUIDEA 1,602L 78+11DX8</td><td>8410104923204</td></tr><tr><td>FLOR QP MIXTO NNC+ AZUL 59D(90</td><td>8410104926182</td></tr><tr><td>FLORJAZMNYRUB89D(4-CS</td><td>8410104926564</td></tr><tr><td>FLORORQUDEABLANCA89D(4-CS</td><td>8410104926557</td></tr><tr><td>FLORAZULMPCRF78+11</td><td>8410104910594</td></tr><tr><td>FLOR PERF. ROSA TRIPLO (1-CS</td><td>8410104926830</td></tr><tr><td>FLOR AZUL 172D (2 - CS</td><td>8410104926847</td></tr><tr><td>FLOR NENUCO 172D (2 -CS</td><td>8410104926854</td></tr><tr><td>FLOR OR. AZUL 139DX2</td><td>8410104926922</td></tr><tr><td>FLOR AZUL 78D X 4U AMZ</td><td>8447713003287</td></tr><tr><td>FLOR AZUL 78D X4 (CA</td><td>8447713003744</td></tr><tr><td>FLOR NNC 78D X 4U AMZ</td><td>8447713003294</td></tr><tr><td>FLOR PERFUMADOR ROSA X4 AM</td><td>8447713003591</td></tr><tr><td>FLOR PERF ROSA X4 AMZ</td><td>8447713004413</td></tr><tr><td>FLOR CONC. ORIG 100 LAV. 8U</td><td>8447713003638</td></tr><tr><td>FLOR CONC. ORIG 70 LAV. 10U</td><td>8447713003645</td></tr><tr><td>FLOR CONC.66 L AZ X10 AMZ- 1U</td><td>08447713003652</td></tr><tr><td>FLOR PERF. TROPICAL 720ML 12U</td><td>8447713003706</td></tr><tr><td>FLOR CONC. 66 LAV. CEREZO 10U</td><td>8447713003911</td></tr><tr><td>FLOR CONC. 87+13 LAV. NNC 8U</td><td>8447713003935</td></tr><tr><td>FLOR CONC. 66 LAV. MEDIT 10U</td><td>8447713003966</td></tr><tr><td>FLOR CONC. 66 LAV. NENUCO 10U</td><td>8447713003980</td></tr><tr><td>FLOR CONC.66 LAV. AZUL 10U</td><td>8447713003836</td></tr><tr><td>FLOR CONC. 87 LAV. AZUL U180</td><td>8447713003829</td></tr><tr><td>FLOR CONC. 87+13 LAV. AZUL 8U</td><td>8447713003799</td></tr><tr><td>FLOR CONC. 66 LAV. D. VER 10U</td><td>8447713003881</td></tr><tr><td>FLOR CONC. 87 LAV. AZUL 8U</td><td>8447713003829</td></tr><tr><td>FLOR CONC. 87 LAV. P. SENS 8U</td><td>8447713003898</td></tr><tr><td>FLOR CONC 87 LAV ORQUIDEA</td><td>8447713003874</td></tr><tr><td>FLOR CON.193 LAV.AZUL 4U</td><td>8447713003805</td></tr><tr><td>FLOR CONC. ORIG 156 LAV. 6U</td><td>8447713003621</td></tr><tr><td>FLOR CONC. 87 LAV. NENUCO 8U</td><td>8447713003942</td></tr><tr><td>FLOR CONC. 193 LAV. NENUCO 4U</td><td>8447713003973</td></tr><tr><td>FLOR CONC. 87 LAV. MEDIT 8U</td><td>8447713003959</td></tr><tr><td>FLOR CONC. 87 LAV. CEREZO 8U</td><td>8447713003928</td></tr><tr><td>FLOR CONC. 87 LAV. D. VER 8U</td><td>8447713003904</td></tr><tr><td>FLOR AZUL 87D X 6 (CRF</td><td>8447713004512</td></tr><tr><td>FLOR AZUL 87D X 4U AMZ</td><td>8447713004420</td></tr><tr><td>FLOR AZUL 193 X 2 CS</td><td>8447713004444</td></tr><tr><td>FLOR NNC 193 X 2 CS</td><td>8447713004680</td></tr><tr><td>FLOR NNC 87D X 4U (AMZ</td><td>8447713004697</td></tr><tr><td>FLOR PERF AZUL X3 720ML (CS</td><td>8447713004437</td></tr><tr><td>FLOR PERF ROSA X3 720ML (CS</td><td>8447713004673</td></tr><tr><td>FLOR CONC. 66 NNC X10 (AMZ</td><td>8447713004451</td></tr><tr><td>FLOR CONC 66 LAV P. SEN(10</td><td>8447713005120</td></tr><tr><td>FLOR CONC 66 LAV ORQUIDEA (10</td><td>8447713005144</td></tr><tr><td>FLOR PERF. TROPICAL TRIPLO (CS</td><td>8447713005519</td></tr><tr><td>FLOR CONC. P.SENS 87DX4 (CS</td><td>8447713005526</td></tr><tr><td>FLOR SECADORAS 40 HOJAS (14</td><td>8410104099022</td></tr><tr><td>FLOR TOALLITAS SECADORA 40 (14</td><td>8410104099022</td></tr><tr><td>FLOR TOALLITAS SECADORAS X3 AM</td><td>8447713003584</td></tr><tr><td>FLOR,ES,INSTANT AZUL 237ML X8</td><td>8410104915704</td></tr></tbody></table></div>
+</div>`;
 
-  <section class="bl" id="bases-organizador"><h4>1. Empresa organizadora</h4>
-    <p>[Razón social], con domicilio social en [Dirección] y CIF [CIF] (en adelante, «la Organizadora»), organiza la promoción «Descubre tu fragancia ${LOGO}», que se regirá por las presentes bases.</p></section>
-
-  <section class="bl" id="bases-ambito"><h4>2. Ámbito territorial y duración</h4>
-    <p>La promoción es válida en todo el territorio español. El periodo de participación comienza el 28 de octubre de 2026 a las 00:00 h y finaliza el 31 de diciembre de 2026 a las 23:59 h. Solo serán válidas las compras realizadas dentro de dicho periodo.</p></section>
-
-  <section class="bl" id="bases-requisitos"><h4>3. Requisitos para participar</h4>
-    <ul><li>Ser persona física mayor de 18 años y residente legal en España.</li>
-      <li>Haber comprado al menos uno de los productos indicados en el apartado 4 en cualquier establecimiento de España.</li>
-      <li>Conservar el ticket original de compra, que podrá ser solicitado para validar el premio.</li></ul>
-    <p>No es necesario realizar el test de fragancias para participar en el sorteo. El test es una herramienta orientativa y no influye en las probabilidades de ganar.</p></section>
-
-  <section class="bl" id="bases-productos"><h4>4. Productos que participan en la promoción</h4>
-    <p>Participan en la promoción exclusivamente los siguientes productos ${LOGO}, en cualquiera de sus formatos disponibles en el punto de venta:</p>
-    <table class="ptable"><thead><tr><th></th><th>Producto</th><th>Familia olfativa</th></tr></thead><tbody>
-      ${PRODS.map(k=>`<tr><td><img src="assets/productos/${FR[k].img}.webp" alt="" width="17" height="44" loading="lazy"></td><td><b style="color:var(--ink)">Suavizante concentrado ${FR[k].name.replace(/^Flor/, LOGO)}</b></td><td>${FR[k].family}</td></tr>`).join("")}
-      ${["Azul","Rosa","Tropical"].map(p=>`<tr><td><img src="assets/perfumadores/${p.toLowerCase()}.png" alt="" width="19" height="44" loading="lazy"></td><td><b style="color:var(--ink)">${LOGO} Perfumador ${p}</b></td><td>Perfumador para la ropa</td></tr>`).join("")}
-    </tbody></table>
-    <p>Quedan excluidos de la promoción los productos no incluidos en este listado, así como las compras realizadas fuera del periodo promocional. [Listado de formatos y códigos EAN pendiente de confirmar].</p></section>
-
-  <section class="bl" id="bases-mecanica"><h4>5. Mecánica de participación</h4>
-    <ol><li>Comprar uno o varios productos participantes.</li>
-      <li>Acceder a esta página y pulsar «Sube aquí tu ticket y participa en el sorteo».</li>
-      <li>Completar el formulario con nombre, apellidos y email, y adjuntar una foto legible del ticket donde se vean el establecimiento, la fecha, el producto y el importe.</li></ol>
-    <p>Cada ticket solo podrá registrarse una vez. Se permite una participación por ticket y un máximo de [X] participaciones por persona durante la promoción.</p></section>
-
-  <section class="bl" id="bases-premio"><h4>6. Premio</h4>
-    <p>Se sortearán 10 Smartbox SPA valoradas en 79,90 € cada una (IVA incluido), una por persona ganadora. Los premios no podrán canjearse por su valor en metálico ni cederse a terceros. La Organizadora se reserva el derecho a sustituirlo por otro de valor igual o superior.</p></section>
-
-  <section class="bl" id="bases-sorteo"><h4>7. Sorteo y comunicación al ganador</h4>
-    <p>El sorteo se realizará ante notario el [dd/mm/2027] entre todas las participaciones válidas. Se seleccionará también a [número] suplentes. Las personas ganadoras serán contactadas por email y dispondrá de [7] días naturales para aceptar el premio y enviar el ticket original.</p></section>
-
-  <section class="bl" id="bases-datos"><h4>8. Protección de datos</h4>
-    <p>Los datos facilitados serán tratados por la Organizadora para gestionar la participación en el sorteo y la entrega del premio, conforme a la política de privacidad. Puedes ejercer tus derechos escribiendo a [email de contacto].</p></section>
-
-  <section class="bl" id="bases-aceptacion"><h4>9. Aceptación de las bases</h4>
-    <p>La participación en la promoción implica la aceptación íntegra de estas bases. La Organizadora se reserva el derecho a excluir participaciones fraudulentas o que no cumplan los requisitos.</p></section>`;
-
-const LEGAL = {
-  cookies:["Política de cookies","Cookies",[
-    "Este sitio utiliza cookies técnicas necesarias para su funcionamiento. Solo con tu consentimiento se utilizarán cookies analíticas o de personalización.",
-    "Puedes configurar o rechazar las cookies en cualquier momento desde la configuración de tu navegador.",
-    "[Texto pendiente de validación por el departamento legal]."]],
-  privacidad:["Política de privacidad","Privacidad",[
-    "Responsable del tratamiento: [Razón social]. Finalidad: gestionar tu participación en el sorteo y, en su caso, la entrega del premio.",
-    "Legitimación: tu consentimiento al aceptar las bases legales. Los datos no se cederán a terceros salvo obligación legal.",
-    "Las respuestas del test de fragancias se guardan de forma anónima, sin nombre, email ni otros datos que te identifiquen, para elaborar estadísticas de la promoción.",
-    "Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a [email de contacto]. [Texto pendiente de validación por el departamento legal]."]]
-};
+/* Política de privacidad definitiva, aprobada por el cliente (POLITICA_DE_PRIVACIDAD_CUAL_ES_TU_FLOR_v1.docx).
+   Texto copiado literalmente del documento: no editar a mano. */
+const PRIVACIDAD = `<h3>POLÍTICA DE PRIVACIDAD</h3>
+<p><b>Promoción “¿Cuál es tu FLOR?”</b></p>
+<p>En VEH Hibiscus Spain, S.L.U. (en adelante, “Vestacy”) nos comprometemos a proteger su privacidad y a tratar sus datos personales de conformidad con el Reglamento (UE) 2016/679, General de Protección de Datos (“RGPD”), la Ley Orgánica 3/2018, de Protección de Datos Personales y garantía de los derechos digitales, y demás normativa aplicable.</p>
+<p>La presente Política de Privacidad regula el tratamiento de los datos personales recabados con motivo de la participación en la promoción “¿Cuál es tu FLOR?”.</p>
+<p>En este documento se explica qué datos personales tratamos, con qué finalidad, durante cuánto tiempo los conservamos, con quién los compartimos y cuáles son los derechos de los participantes.</p>
+<h4>1. Responsable del tratamiento</h4>
+<p>El responsable del tratamiento de los datos personales es:</p>
+<p><b>VEH Hibiscus Spain, S.L.U.</b></p>
+<p>CIF: B48001770</p>
+<p>Domicilio social:</p>
+<p>Paseo de Gracia número 9</p>
+<p>08007 Barcelona</p>
+<p>En la presente Política de Privacidad, las referencias a “Vestacy”, “la Organización”, “nosotros” o “nuestro” se entenderán realizadas a VEH Hibiscus Spain, S.L.U.</p>
+<h4>2. ¿Qué datos personales tratamos?</h4>
+<p>Con motivo de la participación en la promoción podremos tratar las siguientes categorías de datos personales:</p>
+<ul>
+<li>Nombre y apellidos.</li>
+<li>Dirección de correo electrónico.</li>
+<li>Producto FLOR adquirido.</li>
+<li>Establecimiento donde se realizó la compra.</li>
+<li>Comunidad Autónoma indicada en el formulario.</li>
+<li>Imagen del ticket de compra o, en caso de compras online, factura o justificante equivalente.</li>
+<li>Información relativa a la participación en la promoción y, cuando se complete voluntariamente, las respuestas al test de fragancias necesarias para generar una recomendación personalizada.</li>
+<li>Datos adicionales que, en su caso, resulten estrictamente necesarios para verificar la identidad de la persona ganadora o gestionar la entrega del premio.</li>
+<li>Cualquier otra información que el participante facilite voluntariamente durante la gestión de la promoción.</li>
+</ul>
+<p>El participante garantiza que todos los datos facilitados son veraces, exactos y se encuentran actualizados.</p>
+<p>Vestacy no será responsable de las consecuencias derivadas de la comunicación de datos inexactos, incompletos o desactualizados.</p>
+<h4>3. ¿Con qué finalidad tratamos sus datos?</h4>
+<p>Sus datos personales serán tratados para las finalidades descritas en la tabla siguiente:</p>
+<div class="privtable-wrap"><table class="privtable"><thead><tr><th>Finalidad</th><th>Base jurídica</th></tr></thead><tbody><tr><td>Gestionar la participación en la promoción.</td><td>Ejecución de las Bases Legales (art. 6.1.b RGPD).</td></tr><tr><td>Verificar el cumplimiento de los requisitos de participación.</td><td>Ejecución de las Bases Legales (art. 6.1.b RGPD).</td></tr><tr><td>Validar la autenticidad del ticket de compra o de la documentación aportada.</td><td>Ejecución de las Bases Legales (art. 6.1.b RGPD).</td></tr><tr><td>Gestionar el sorteo y determinar las personas ganadoras.</td><td>Ejecución de las Bases Legales (art. 6.1.b RGPD).</td></tr><tr><td>Contactar con los participantes y las personas ganadoras.</td><td>Ejecución de las Bases Legales (art. 6.1.b RGPD).</td></tr><tr><td>Gestionar la aceptación, emisión y entrega de los premios.</td><td>Ejecución de las Bases Legales (art. 6.1.b RGPD).</td></tr><tr><td>Generar una recomendación personalizada a través del test de fragancias, cuando el participante decida completarlo.</td><td>Prestación del servicio solicitado por el usuario (art. 6.1.b RGPD).</td></tr><tr><td>Detectar y prevenir participaciones fraudulentas.</td><td>Interés legítimo (art. 6.1.f RGPD).</td></tr><tr><td>Gestionar consultas, incidencias y reclamaciones relacionadas con la promoción.</td><td>Ejecución de las Bases Legales e interés legítimo (arts. 6.1.b y 6.1.f RGPD).</td></tr></tbody></table></div>
+<p>Los datos personales no serán utilizados para finalidades distintas de las descritas anteriormente, salvo que exista una obligación legal o una base jurídica que lo permita.</p>
+<h4>4. ¿Con quién compartimos sus datos?</h4>
+<p><b>SAMPLIA MEDIA, S.L.</b></p>
+<p><b>SAMPLIA MEDIA, S.L. actuará como encargado del tratamiento, gestionando la promoción por cuenta de VEH Hibiscus Spain, S.L.U., responsable del tratamiento.</b></p>
+<p>Samplia tratará los datos personales exclusivamente siguiendo las instrucciones de Vestacy y únicamente para:</p>
+<ul>
+<li>gestionar las participaciones;</li>
+<li>validar la documentación aportada;</li>
+<li>realizar el sorteo;</li>
+<li>contactar con los participantes y las personas ganadoras;</li>
+<li>gestionar la aceptación de los premios;</li>
+<li>atender incidencias y reclamaciones;</li>
+<li>prevenir actuaciones fraudulentas;</li>
+<li>coordinar la entrega de los premios.</li>
+</ul>
+<p>Samplia tratará los datos conforme al correspondiente contrato de encargado del tratamiento suscrito con Vestacy y únicamente durante el tiempo necesario para la correcta gestión de la promoción.</p>
+<p><b>Comunicación de datos para la entrega de premios</b></p>
+<p>Para gestionar la entrega del premio, Samplia podrá comunicar a Vestacy y/o al proveedor encargado de emitir o gestionar la e-box los datos estrictamente necesarios, como el nombre y apellidos y la dirección de correo electrónico de la persona ganadora.</p>
+<p>La comunicación de estos datos tendrá como única finalidad gestionar la asignación, emisión y entrega de la e-box correspondiente. No se comunicarán datos adicionales salvo que resulten necesarios para dicha gestión.</p>
+<p>Asimismo, podrán intervenir proveedores tecnológicos o plataformas necesarias para administrar el formulario, gestionar el sorteo o enviar las comunicaciones relativas a la promoción, siempre en la medida necesaria para prestar dichos servicios.</p>
+<p>Estas comunicaciones de datos se realizarán únicamente para gestionar la promoción y ejecutar las presentes Bases Legales, y no supondrán un tratamiento para finalidades incompatibles con las descritas en esta Política de Privacidad.</p>
+<p><b>Otros proveedores</b></p>
+<p>Vestacy podrá permitir el acceso a los datos personales por parte de:</p>
+<ul>
+<li>proveedores tecnológicos y de alojamiento web;</li>
+<li>proveedores de herramientas de gestión del sorteo;</li>
+<li>proveedores de correo electrónico y comunicaciones;</li>
+<li>proveedores encargados de emitir o gestionar los premios;</li>
+<li>otros colaboradores cuya intervención resulte necesaria para la correcta gestión de la promoción.</li>
+</ul>
+<p>Estos proveedores tratarán los datos conforme a la normativa vigente en materia de protección de datos y, cuando corresponda, siguiendo las instrucciones de Vestacy.</p>
+<p>Asimismo, los datos podrán comunicarse cuando exista obligación legal o requerimiento de las autoridades competentes.</p>
+<h4>5. ¿Se realizan transferencias internacionales de datos?</h4>
+<p>Con carácter general, no está previsto realizar transferencias internacionales de datos personales.</p>
+<p>Si algún proveedor implicara una transferencia internacional, esta se realizará únicamente cuando se cumplan las condiciones y garantías exigidas por el Reglamento General de Protección de Datos.</p>
+<h4>6. ¿Cómo protegemos sus datos?</h4>
+<p>Vestacy aplicará medidas técnicas y organizativas apropiadas para proteger la seguridad, confidencialidad e integridad de los datos personales y evitar su pérdida, alteración, tratamiento o acceso no autorizado.</p>
+<h4>7. ¿Durante cuánto tiempo conservaremos sus datos?</h4>
+<p>Los datos personales serán conservados durante el tiempo necesario para:</p>
+<ul>
+<li>gestionar las participaciones;</li>
+<li>realizar el sorteo y determinar las personas ganadoras;</li>
+<li>contactar con las personas ganadoras;</li>
+<li>gestionar la aceptación y entrega de los premios;</li>
+<li>atender posibles incidencias, reclamaciones o responsabilidades legales.</li>
+</ul>
+<p>Una vez finalizada la promoción, los datos se conservarán únicamente durante los plazos exigidos por la normativa aplicable o mientras puedan derivarse responsabilidades legales relacionadas con la misma.</p>
+<p>Finalizados dichos plazos, los datos serán eliminados o anonimizados de forma segura.</p>
+<h4>8. ¿Cuáles son sus derechos?</h4>
+<p>Los participantes podrán ejercer en cualquier momento los siguientes derechos:</p>
+<ul>
+<li>Derecho de acceso.</li>
+<li>Derecho de rectificación.</li>
+<li>Derecho de supresión.</li>
+<li>Derecho de oposición.</li>
+<li>Derecho a la limitación del tratamiento.</li>
+<li>Derecho a la portabilidad de los datos.</li>
+</ul>
+<p>Para ejercer cualquiera de estos derechos, los participantes podrán dirigirse al responsable del tratamiento a través del correo electrónico dpo@samplia.com.</p>
+<p>Asimismo, si consideran que el tratamiento de sus datos personales no se ajusta a la normativa vigente, podrán presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).</p>
+<h4>9. Modificaciones de la Política de Privacidad</h4>
+<p>Vestacy podrá modificar la presente Política de Privacidad cuando resulte necesario para adaptarla a cambios legales, regulatorios o derivados de la propia promoción.</p>
+<p>La versión vigente estará disponible en la página web de la promoción:</p>
+<p>https://cualestuflor.es</p>
+<h4>10. Contacto</h4>
+<p>Para cualquier consulta relacionada con la presente Política de Privacidad o para ejercer cualquiera de sus derechos, podrá dirigirse a:</p>
+<p><b>VEH Hibiscus Spain, S.L.U. y/o SAMPLIA MEDIA, S.L.</b></p>
+<p>Correo electrónico: dpo@samplia.com</p>
+<p>Asimismo, si considera que el tratamiento de sus datos personales no se ajusta a la normativa vigente, podrá presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).<a class="legal-link" href="http://www.aepd.es/" target="_blank" rel="noopener"><b>www.aepd.es</b></a></p>`;
 
 /* Abre las bases legales y, si se indica, salta al marcador */
 function openLegal(anchor){
@@ -684,7 +797,7 @@ function openLegal(anchor){
   if(!el){ mBody.scrollTop=0; return; }
   setTimeout(()=>{
     mBody.scrollTo({top:el.offsetTop-12,behavior:wasOpen?"smooth":"instant"});
-    mBody.querySelectorAll(".bl.flash").forEach(x=>x.classList.remove("flash"));
+    mBody.querySelectorAll(".flash").forEach(x=>x.classList.remove("flash"));
     el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"),1800);
   },30);
 }
@@ -696,8 +809,7 @@ document.addEventListener("click",e=>{
 });
 document.querySelectorAll("[data-legal]").forEach(b=>b.onclick=()=>{
   if(b.dataset.legal==="legal") return openLegal();
-  const [t,e,ps] = LEGAL[b.dataset.legal];
-  openModal(`<span class="eyebrow">${e}</span><h3>${t}</h3>${ps.map(p=>`<p>${p}</p>`).join("")}`);
+  if(b.dataset.legal==="privacidad") return openModal(`<div class="priv">${PRIVACIDAD}</div>`, true);
 });
 
 /* Botón fijo «Descubre tu fragancia, haz el test»: igual que «Empezar el test» (sube al test y empieza por la pregunta 1).
